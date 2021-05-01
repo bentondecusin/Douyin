@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CS175-Android.Douyin.iml" filepath="$PROJECT_DIR$/.idea/modules/CS175-Android.Douyin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Douyin.iml" filepath="$PROJECT_DIR$/.idea/Douyin.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Douyin.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Douyin.app.iml" />
     </modules>
