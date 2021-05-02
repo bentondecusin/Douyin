@@ -7,6 +7,11 @@
     <string name="home">Home</string>
     <string name="add">Add</string>
     <string name="user">User</string>
+    <string name="meme1">https://img.ifunny.co/videos/45d075f2ff5652c312a735e41866559324dd5381040921faddbe54dcae8b7b51_1.mp4
+</string>
+    <string name="meme2">https://img.ifunny.co/videos/e2b43f2cbcc87b96c4e9936e21ffaa2a992ac3893c0dcafbecd5a7cddda975dd_1.mp4
+</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_info">编辑资料</string>
