@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
       //  hideSystemUi();
-        if ((Util.SDK_INT >= 23 /* || player == null */)) {
+        if ((Util.SDK_INT <= 23 /* || player == null */)) {
             initializePlayer();
         }
     }
