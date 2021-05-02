@@ -117,8 +117,12 @@ public class HomeFragment extends Fragment {
         MediaItem mediaItem2 = new MediaItem.Builder().setUri(getString(R.string.meme2))
                 .setMimeType(MimeTypes.APPLICATION_MP4)
                 .build();
+        MediaItem mediaItem3 = new MediaItem.Builder().setUri(getString(R.string.meme3))
+                .setMimeType(MimeTypes.APPLICATION_MP4)
+                .build();
         player.setMediaItem(mediaItem1);
         player.addMediaItem(mediaItem2);
+        player.addMediaItem(mediaItem3);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
         player.prepare();
