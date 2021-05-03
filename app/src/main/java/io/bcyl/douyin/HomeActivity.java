@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import io.bcyl.douyin.Fragment.Add.AddFragment;
 import io.bcyl.douyin.Fragment.Home.HomeFragment;
-import io.bcyl.douyin.User.UserFragment;
+import io.bcyl.douyin.Fragment.User.UserFragment;
 
 public class HomeActivity extends AppCompatActivity {
     private Fragment mFragmentHome,mFragmentAdd,mFragmentUser;

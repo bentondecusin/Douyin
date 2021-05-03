@@ -5,17 +5,26 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.Home.HomeFragment">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/video_view"
+            android:id="@+id/video_view1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="0" />
+<!--        recover-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvVid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#000000" />
     </LinearLayout>
+
+
 
 
 </FrameLayout>
