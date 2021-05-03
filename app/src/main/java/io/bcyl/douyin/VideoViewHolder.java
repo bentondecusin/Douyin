@@ -17,11 +17,12 @@ import com.google.android.exoplayer2.util.MimeTypes;
 
 import io.bcyl.douyin.Fragment.Home.HomeFragment;
 
+import static com.google.android.exoplayer2.Player.STATE_ENDED;
+
 public class VideoViewHolder extends RecyclerView.ViewHolder{
     private static final String TAG = HomeFragment.class.getName();
     private PlayerView playerView;
     private SimpleExoPlayer player;
-    private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
     public TextView usrName;
@@ -49,8 +50,14 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         playerView.setShowNextButton(false);
         playerView.setControllerAutoShow(false);
         playerView.hideController();
-        player.setRepeatMode(Player.REPEAT_MODE_ALL);
-        player.setPlayWhenReady(playWhenReady);
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playbackState == Player.STATE_ENDED) {
+                    //TODO Next vid
+                }
+            }
+        });
         player.prepare();
     }
 
@@ -58,7 +65,6 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         if (player != null) {
             playbackPosition = player.getCurrentPosition();
             currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
             player.release();
             player = null;
         }
@@ -71,6 +77,9 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+    public SimpleExoPlayer getPlayer(){
+        return this.player;
     }
 
 }

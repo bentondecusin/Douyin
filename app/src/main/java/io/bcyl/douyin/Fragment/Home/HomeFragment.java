@@ -31,6 +31,7 @@ import java.util.List;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.VideoAdapter;
+import io.bcyl.douyin.VideoViewHolder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -136,6 +137,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void run() {
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(0);
+                if (viewHolder != null && viewHolder instanceof VideoViewHolder)
+                    ((VideoViewHolder) viewHolder).getPlayer().play();
             }
         },200);
 
@@ -145,9 +148,12 @@ public class HomeFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 View v = snapHelper.findSnapView(layoutManager);
                 int pos = layoutManager.getPosition(v);
-
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
-
+                RecyclerView.ViewHolder lastViewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos-1);
+                if(lastViewHolder != null && lastViewHolder instanceof VideoViewHolder)
+                    ((VideoViewHolder) lastViewHolder).getPlayer().seekTo(0);
+                if (viewHolder != null && viewHolder instanceof VideoViewHolder)
+                    ((VideoViewHolder) viewHolder).getPlayer().play();
             }
 
             @Override
