@@ -3,11 +3,20 @@ package io.bcyl.douyin.Fragment.Home;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.RelativeLayout;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -16,7 +25,11 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.MimeTypes;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.bcyl.douyin.R;
+import io.bcyl.douyin.VideoAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,17 +37,24 @@ import io.bcyl.douyin.R;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-//    private PlaybackStateListener playbackStateListener;
     private static final String TAG = HomeFragment.class.getName();
-    private PlayerView playerView;
+    private static final String ARG_PARAM = "param";
+
+    /**
+     * For now we are using sentinel data
+     */
+    ArrayList<String[]> srcList = new ArrayList<String[]>();
+
+
+    //    private PlaybackStateListener playbackStateListener;
+    RecyclerView mRecyclerView;
+    VideoAdapter mAdapter;
+//    private PlayerView playerView;
     private SimpleExoPlayer player;
+
     private boolean playWhenReady = true;
     private int currentWindow = 0;
     private long playbackPosition = 0;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM = "param";
 
     // TODO: Rename and change types of parameters
     private String mParam;
@@ -43,14 +63,7 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param Parameter 1.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static HomeFragment newInstance(String param) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -62,6 +75,22 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         * For now we are using sentinel data
+         */
+        String src1[]={getString(R.string.meme1),"Hugh Jaz 1","Yeet"};
+        String src2[]={getString(R.string.meme2),"Hugh Jaz 2","Dank cat"};
+        String src3[]={getString(R.string.meme3),"Hugh Jaz 3","Horses cat"};
+        String src4[]={getString(R.string.meme1),"Hugh Jaz 1","Yeet"};
+        String src5[]={getString(R.string.meme2),"Hugh Jaz 2","Dank cat"};
+        String src6[]={getString(R.string.meme3),"Hugh Jaz 3","Horses cat"};
+        srcList.add(src1);
+        srcList.add(src2);
+        srcList.add(src3);
+        srcList.add(src4);
+        srcList.add(src5);
+        srcList.add(src6);
+
 //        playbackStateListener = new PlaybackStateListener();
 
     }
@@ -77,7 +106,41 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        playerView = view.findViewById(R.id.video_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView = view.findViewById(R.id.rvVid);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+//        playerView = view.findViewById(R.id.video_view1);
+        mAdapter = new VideoAdapter(srcList, getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+
+//
+//        final SnapHelper snapHelper = new LinearSnapHelper();
+//        snapHelper.attachToRecyclerView(mRecyclerView);
+//
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(0);
+//            }
+//        },100);
+//
+//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                View v = snapHelper.findSnapView(layoutManager);
+//                int pos = layoutManager.getPosition(v);
+//
+//                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
+//
+//            }
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//            }
+//        });
         return view;
     }
 
@@ -85,7 +148,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-      //  hideSystemUi();
+        hideSystemUi();
         if ((Util.SDK_INT <= 23 /* || player == null */)) {
             initializePlayer();
         }
@@ -109,7 +172,7 @@ public class HomeFragment extends Fragment {
 
     private void initializePlayer() {
         player = new SimpleExoPlayer.Builder(this.getContext()).build();
-        playerView.setPlayer(player);
+//        playerView.setPlayer(player);
 
         MediaItem mediaItem1 = new MediaItem.Builder().setUri(getString(R.string.meme1))
                 .setMimeType(MimeTypes.APPLICATION_MP4)
@@ -139,12 +202,12 @@ public class HomeFragment extends Fragment {
     }
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
-        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-            | View.SYSTEM_UI_FLAG_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+//            | View.SYSTEM_UI_FLAG_FULLSCREEN
+//            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
 

@@ -14,11 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
-    List<String> vidList;
+    List<String[]> srcList;
     Context context;
-
-    public VideoAdapter(ArrayList<String> list, Context context) {
-        this.vidList = list;
+    public VideoAdapter(ArrayList<String[]> list, Context context) {
+        this.srcList = list;
         this.context = context;
     }
 
@@ -31,12 +30,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull VideoViewHolder videoViewHolder, int i) {
-//        viewHolder.tvTitle.setText(list.get(i).toString());
+        videoViewHolder.url = srcList.get(i)[0];
+        videoViewHolder.usrName.setText(srcList.get(i)[1]);
+        videoViewHolder.vidTitle.setText(srcList.get(i)[2]);
+        videoViewHolder.initializePlayer();;
     }
 
     @Override
     public int getItemCount() {
-        return vidList.size();
+        return srcList.size();
     }
 
 

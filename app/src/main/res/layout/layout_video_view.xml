@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -19,15 +20,16 @@
                 android:layout_alignBottom="@id/vidTitle"
                 android:layout_marginBottom="30dp"
                 android:text="usrName"
+                android:textColor="#FF0000"
                 android:textSize="25dp" />
 
             <TextView
                 android:id="@+id/vidTitle"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="30sp"
                 android:layout_alignParentBottom="true"
                 android:text="title"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
     </com.google.android.exoplayer2.ui.PlayerView>
