@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:id="@+id/user_bgImage"
-            android:scaleType="centerCrop"
+            android:scaleType="centerInside"
             android:contentDescription="@string/user_background" />
 
 
@@ -47,17 +47,19 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="2"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
                         android:text="@string/edit_info" />
 
                     <Button
                         android:id="@+id/add_friend_button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
+                        android:textSize="18sp"
                         android:text="@string/add_friends" />
                 </LinearLayout>
 
@@ -68,6 +70,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textStyle="bold"
                     android:textSize="24sp" />
             </LinearLayout>
 

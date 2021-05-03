@@ -1,8 +1,10 @@
 package io.bcyl.douyin.Fragment.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,11 +19,15 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.bcyl.douyin.InfoEditActivity;
 import io.bcyl.douyin.R;
 
 public class UserFragment extends Fragment {
-
+    public static final int REQUEST_EDIT_CODE=0;
+    public static final int REQUEST_UPDATE_USER=1;
     private final List<VideoItem> itemList=new ArrayList<>();
+    private ImageView bgImageView,headImageView;
+    private TextView userNameView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,7 +42,11 @@ public class UserFragment extends Fragment {
         infoEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO 编辑资料
+                Intent intent=new Intent(getActivity(), InfoEditActivity.class);
+                // TODO 传入图片
+                //intent.putExtra("headerImage","headerUrl");
+                intent.putExtra("userName",userNameView.getText());
+                startActivityForResult(intent,REQUEST_EDIT_CODE);
             }
         });
 
@@ -46,18 +56,17 @@ public class UserFragment extends Fragment {
                 // TODO 关注
             }
         });
-
         return userFragmentView;
     }
 
     private void initView(View view){
-        ImageView bgImageView=view.findViewById(R.id.user_bgImage);
-        bgImageView.setImageResource(R.drawable.ic_launcher_background);
+        bgImageView=view.findViewById(R.id.user_bgImage);
+        bgImageView.setImageResource(R.drawable.ic_tiktok_logo);
 
-        ImageView headImageView=view.findViewById(R.id.head_image);
+        headImageView=view.findViewById(R.id.head_image);
         headImageView.setImageResource(R.mipmap.ic_launcher);
 
-        TextView userNameView=view.findViewById(R.id.user_name_view);
+        userNameView=view.findViewById(R.id.user_name_view);
         userNameView.setText("用户名写在这");
 
         RecyclerView myVideoView = (RecyclerView) view.findViewById(R.id.my_video_view);
@@ -73,5 +82,13 @@ public class UserFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String curUserName=data.getStringExtra("userName");
+        userNameView.setText(curUserName);
+        //String curHeader=data.getStringExtra("headerUrl");
+        //headImageView.setImageBitmap();
 
+    }
 }
