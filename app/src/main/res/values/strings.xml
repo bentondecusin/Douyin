@@ -18,7 +18,10 @@
 </string>
     <string name="meme6">https://img.ifunny.co/videos/e2b43f2cbcc87b96c4e9936e21ffaa2a992ac3893c0dcafbecd5a7cddda975dd_1.mp4
 </string>
-
+    <string name="meme7">https://img.ifunny.co/videos/48a7cca41c641907375827dceb386201e2498036892876693a0d32f976f9329e_1.mp4
+</string>
+    <string name="meme8">https://img.ifunny.co/videos/2357e1b99e68187dc1970b7834c66a29170ae4d506fcc59c8f7d176a02c267a9_1.mp4
+</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_info">编辑资料</string>
