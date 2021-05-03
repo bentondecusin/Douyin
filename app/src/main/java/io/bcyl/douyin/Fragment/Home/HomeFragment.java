@@ -1,6 +1,7 @@
 package io.bcyl.douyin.Fragment.Home;
 
 import android.annotation.SuppressLint;
+import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -56,7 +57,6 @@ public class HomeFragment extends Fragment {
     private int currentWindow = 0;
     private long playbackPosition = 0;
 
-    // TODO: Rename and change types of parameters
     private String mParam;
 
     public HomeFragment() {
@@ -110,9 +110,9 @@ public class HomeFragment extends Fragment {
 
     public void onStart(){
         super.onStart();
-        if (Util.SDK_INT > 23) {
-            initializePlayer();
-        }
+//        if (Util.SDK_INT > 23) {
+//            initializePlayer();
+//        }
     }
 
     @Override
@@ -127,33 +127,34 @@ public class HomeFragment extends Fragment {
         mAdapter = new VideoAdapter(srcList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-//
-//        final SnapHelper snapHelper = new LinearSnapHelper();
-//        snapHelper.attachToRecyclerView(mRecyclerView);
-//
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(0);
-//            }
-//        },100);
-//
-//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                View v = snapHelper.findSnapView(layoutManager);
-//                int pos = layoutManager.getPosition(v);
-//
-//                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
-//
-//            }
-//
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//            }
-//        });
+
+
+        final SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(mRecyclerView);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(0);
+            }
+        },200);
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                View v = snapHelper.findSnapView(layoutManager);
+                int pos = layoutManager.getPosition(v);
+
+                RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
+
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
         return view;
     }
 
@@ -161,7 +162,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        hideSystemUi();
+//        hideSystemUi();
         if ((Util.SDK_INT <= 23 /* || player == null */)) {
             initializePlayer();
         }
@@ -170,17 +171,17 @@ public class HomeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (Util.SDK_INT <= 23) {
-            releasePlayer();
-        }
+//        if (Util.SDK_INT <= 23) {
+//            releasePlayer();
+//        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
+//        if (Util.SDK_INT > 23) {
+//            releasePlayer();
+//        }
     }
 
     private void initializePlayer() {

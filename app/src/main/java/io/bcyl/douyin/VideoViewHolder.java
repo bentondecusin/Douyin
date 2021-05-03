@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.MimeTypes;
@@ -43,9 +44,13 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
                 .setMimeType(MimeTypes.APPLICATION_MP4)
                 .build();
         player.setMediaItem(mediaItem);
-        player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
         playerView.setShowPreviousButton(false);
+        playerView.setShowNextButton(false);
+        playerView.setControllerAutoShow(false);
+        playerView.hideController();
+        player.setRepeatMode(Player.REPEAT_MODE_ALL);
+        player.setPlayWhenReady(playWhenReady);
         player.prepare();
     }
 
