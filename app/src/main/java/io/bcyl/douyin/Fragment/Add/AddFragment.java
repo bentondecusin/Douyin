@@ -82,6 +82,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mRecordButton = view.findViewById(R.id.bt_record);
 
         mHolder = mSurfaceView.getHolder();
+
         initCamera();
         return view;
     }
