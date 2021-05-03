@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/usrName"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_alignBottom="@id/vidTitle"
+                android:layout_marginBottom="30dp"
+                android:text="usrName"
+                android:textSize="25dp" />
+
+            <TextView
+                android:id="@+id/vidTitle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:text="title"
+                android:textSize="20dp" />
+        </RelativeLayout>
+
+    </com.google.android.exoplayer2.ui.PlayerView>
+
+
+
+</LinearLayout>
