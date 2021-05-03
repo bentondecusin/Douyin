@@ -78,12 +78,18 @@ public class HomeFragment extends Fragment {
         /**
          * For now we are using sentinel data
          */
-        String src1[]={getString(R.string.meme1),"Hugh Jaz 1","Yeet"};
-        String src2[]={getString(R.string.meme2),"Hugh Jaz 2","Dank cat"};
-        String src3[]={getString(R.string.meme3),"Hugh Jaz 3","Horses cat"};
-        String src4[]={getString(R.string.meme1),"Hugh Jaz 1","Yeet"};
-        String src5[]={getString(R.string.meme2),"Hugh Jaz 2","Dank cat"};
-        String src6[]={getString(R.string.meme3),"Hugh Jaz 3","Horses cat"};
+        String src1[]={getString(R.string.meme1),"Hugh Jaz 1","Shiba"};
+        String src2[]={getString(R.string.meme2),"Hugh Jaz 2","Birdie"};
+        String src3[]={getString(R.string.meme3),"Hugh Jaz 3","Horses in Walmart"};
+        String src4[]={getString(R.string.meme4),"Hugh Jaz 4","Sad Dog"};
+        String src5[]={getString(R.string.meme5),"Hugh Jaz 5","Omegle"};
+        String src6[]={getString(R.string.meme6),"Hugh Jaz 6","Dank cat"};
+        srcList.add(src1);
+        srcList.add(src2);
+        srcList.add(src3);
+        srcList.add(src4);
+        srcList.add(src5);
+        srcList.add(src6);
         srcList.add(src1);
         srcList.add(src2);
         srcList.add(src3);

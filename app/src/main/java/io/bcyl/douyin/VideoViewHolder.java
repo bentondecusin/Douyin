@@ -45,6 +45,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         player.setMediaItem(mediaItem);
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
+        playerView.setShowPreviousButton(false);
         player.prepare();
     }
 

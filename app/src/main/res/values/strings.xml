@@ -7,11 +7,16 @@
     <string name="home">Home</string>
     <string name="add">Add</string>
     <string name="user">User</string>
-    <string name="meme1">https://img.ifunny.co/videos/45d075f2ff5652c312a735e41866559324dd5381040921faddbe54dcae8b7b51_1.mp4
-</string>
-    <string name="meme2">https://img.ifunny.co/videos/e2b43f2cbcc87b96c4e9936e21ffaa2a992ac3893c0dcafbecd5a7cddda975dd_1.mp4
+    <string name="meme1"> https://img.ifunny.co/videos/3b37158bc60eea6d11623bd16aecdb1bb3fa73500dfe1eacf5b5d71261d864a9_1.mp4</string>
+    <string name="meme2">https://img.ifunny.co/videos/45d075f2ff5652c312a735e41866559324dd5381040921faddbe54dcae8b7b51_1.mp4
 </string>
     <string name="meme3">https://img.ifunny.co/videos/358762ca5da69e4ea38802ff270274c957b65156fc64735bac8efe13d8c8c73d_1.mp4
+</string>
+    <string name="meme4"> https://img.ifunny.co/videos/fd211f251c14215f60901fb987663e9da7747e20efde7d2ead782aab11fb4f5e_1.mp4
+</string>
+    <string name="meme5"> https://img.ifunny.co/videos/3474808dc64ce5136b55dcf9314b043f8ed9e40d8a49277db0ebbc472611af40_1.mp4
+</string>
+    <string name="meme6">https://img.ifunny.co/videos/e2b43f2cbcc87b96c4e9936e21ffaa2a992ac3893c0dcafbecd5a7cddda975dd_1.mp4
 </string>
 
     <!-- TODO: Remove or change this placeholder text -->
