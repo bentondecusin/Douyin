@@ -35,12 +35,15 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_home:
                         showFragment(FRAGMENT_HOME);
+                        mFragmentHome.onResume();
                         return true;
                     case R.id.menu_add:
                         showFragment(FRAGMENT_ADD);
+                        mFragmentHome.onPause();
                         return true;
                     case R.id.menu_user:
                         showFragment(FRAGMENT_USER);
+                        mFragmentHome.onPause();
                         return true;
                 }
                 return false;

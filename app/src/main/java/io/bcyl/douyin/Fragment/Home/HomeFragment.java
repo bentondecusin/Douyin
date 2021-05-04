@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,30 +41,23 @@ import io.bcyl.douyin.VideoViewHolder;
  */
 public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getName();
+    private LinearLayoutManager layoutManager;
+    private SnapHelper snapHelper;
     private static final String ARG_PARAM = "param";
+    private View view;
+    private View v;
+    private int pos;
+
 
     /**
      * For now we are using sentinel data
      */
     ArrayList<String[]> srcList = new ArrayList<String[]>();
-
-
-    //    private PlaybackStateListener playbackStateListener;
     RecyclerView mRecyclerView;
     VideoAdapter mAdapter;
-//    private PlayerView playerView;
-    private SimpleExoPlayer player;
-
-    private boolean playWhenReady = true;
-    private int currentWindow = 0;
-    private long playbackPosition = 0;
-
-    private String mParam;
-
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     public static HomeFragment newInstance(String param) {
         HomeFragment fragment = new HomeFragment();
@@ -103,34 +97,25 @@ public class HomeFragment extends Fragment {
         srcList.add(src5);
         srcList.add(src6);
         srcList.add(src7);
-
-
-//        playbackStateListener = new PlaybackStateListener();
-
     }
 
     public void onStart(){
         super.onStart();
-//        if (Util.SDK_INT > 23) {
-//            initializePlayer();
-//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        view = inflater.inflate(R.layout.fragment_home, container, false);
+        layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView = view.findViewById(R.id.rvVid);
         mRecyclerView.setLayoutManager(layoutManager);
-
-//        playerView = view.findViewById(R.id.video_view1);
         mAdapter = new VideoAdapter(srcList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setRecyclerView(mRecyclerView);
 
 
-
-        final SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
 
         new Handler().postDelayed(new Runnable() {
@@ -146,89 +131,58 @@ public class HomeFragment extends Fragment {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                View v = snapHelper.findSnapView(layoutManager);
-                int pos = layoutManager.getPosition(v);
+                v = snapHelper.findSnapView(layoutManager);
+                pos = layoutManager.getPosition(v);
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
-                RecyclerView.ViewHolder lastViewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos-1);
-                if(lastViewHolder != null && lastViewHolder instanceof VideoViewHolder)
-                    ((VideoViewHolder) lastViewHolder).getPlayer().seekTo(0);
                 if (viewHolder != null && viewHolder instanceof VideoViewHolder)
                     ((VideoViewHolder) viewHolder).getPlayer().play();
             }
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+                super.onScrolled(recyclerView, dx/10, dy/10);
             }
         });
         return view;
     }
 
+    public void pauseCurrentVideo(){
+        v = snapHelper.findSnapView(layoutManager);
+        pos = layoutManager.getPosition(v);
+        RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
+        ((VideoViewHolder) viewHolder).getPlayer().pause();
+    }
+
+    public void resumeCurrentVideo(){
+        v = snapHelper.findSnapView(layoutManager);
+        if (v != null) {
+            pos = layoutManager.getPosition(v);
+            RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
+            ((VideoViewHolder) viewHolder).getPlayer().play();
+        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-//        hideSystemUi();
-        if ((Util.SDK_INT <= 23 /* || player == null */)) {
-            initializePlayer();
-        }
+        Log.i(TAG,"On resume");
+        resumeCurrentVideo();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        if (Util.SDK_INT <= 23) {
-//            releasePlayer();
-//        }
+        Log.i(TAG,"On pause");
+        pauseCurrentVideo();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        if (Util.SDK_INT > 23) {
-//            releasePlayer();
-//        }
+        Log.i(TAG,"On stop");
+        pauseCurrentVideo();
     }
 
-    private void initializePlayer() {
-        player = new SimpleExoPlayer.Builder(this.getContext()).build();
-//        playerView.setPlayer(player);
-
-        MediaItem mediaItem1 = new MediaItem.Builder().setUri(getString(R.string.meme1))
-                .setMimeType(MimeTypes.APPLICATION_MP4)
-                .build();
-        MediaItem mediaItem2 = new MediaItem.Builder().setUri(getString(R.string.meme2))
-                .setMimeType(MimeTypes.APPLICATION_MP4)
-                .build();
-        MediaItem mediaItem3 = new MediaItem.Builder().setUri(getString(R.string.meme3))
-                .setMimeType(MimeTypes.APPLICATION_MP4)
-                .build();
-        player.setMediaItem(mediaItem1);
-        player.addMediaItem(mediaItem2);
-        player.addMediaItem(mediaItem3);
-        player.setPlayWhenReady(playWhenReady);
-        player.seekTo(currentWindow, playbackPosition);
-        player.prepare();
-    }
-
-    private void releasePlayer() {
-        if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
-            playWhenReady = player.getPlayWhenReady();
-            player.release();
-            player = null;
-        }
-    }
-    @SuppressLint("InlinedApi")
-    private void hideSystemUi() {
-//        playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-//            | View.SYSTEM_UI_FLAG_FULLSCREEN
-//            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
 
 
 }

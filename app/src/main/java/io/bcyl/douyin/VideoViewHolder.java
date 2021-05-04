@@ -3,7 +3,6 @@ package io.bcyl.douyin;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,8 +16,6 @@ import com.google.android.exoplayer2.util.MimeTypes;
 
 import io.bcyl.douyin.Fragment.Home.HomeFragment;
 
-import static com.google.android.exoplayer2.Player.STATE_ENDED;
-
 public class VideoViewHolder extends RecyclerView.ViewHolder{
     private static final String TAG = HomeFragment.class.getName();
     private PlayerView playerView;
@@ -28,14 +25,15 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
     public TextView usrName;
     public TextView vidTitle;
     public String url;
-    Context context;
-    View view;
+    public Context context;
+    private VideoAdapter videoAdapter;
     public VideoViewHolder(@NonNull View itemView) {
         super(itemView);
         context = itemView.getContext();
-        usrName   = itemView.findViewById(R.id.vidTitle);
-        vidTitle  = itemView.findViewById(R.id.usrName);
+        usrName   = itemView.findViewById(R.id.usrName);
+        vidTitle  = itemView.findViewById(R.id.vidTitle);
         playerView = itemView.findViewById(R.id.video_view);
+
     }
 
     public void initializePlayer() {
@@ -48,20 +46,25 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         player.seekTo(currentWindow, playbackPosition);
         playerView.setShowPreviousButton(false);
         playerView.setShowNextButton(false);
+        playerView.setShowFastForwardButton(false);
+        playerView.setShowRewindButton(false);
         playerView.setControllerAutoShow(false);
         playerView.hideController();
         player.addListener(new Player.EventListener() {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 if (playbackState == Player.STATE_ENDED) {
-                    //TODO Next vid
+                    int idx = getAdapterPosition();
+                    if (videoAdapter.getItemCount() > idx)
+                        videoAdapter.getRecyclerView().smoothScrollToPosition(idx+1);
                 }
             }
         });
         player.prepare();
     }
 
-    private void releasePlayer() {
+
+    public void releasePlayer() {
         if (player != null) {
             playbackPosition = player.getCurrentPosition();
             currentWindow = player.getCurrentWindowIndex();
@@ -69,6 +72,12 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
             player = null;
         }
     }
+
+    public void setAdapter(VideoAdapter videoAdapter){
+        this.videoAdapter = videoAdapter;
+    }
+
+
     @SuppressLint("InlinedApi")
     private void hideSystemUi() {
         playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
