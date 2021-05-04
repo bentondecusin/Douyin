@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:id="@+id/user_bgImage"
+            android:src="@drawable/ic_tiktok_logo"
             android:scaleType="centerInside"
             android:contentDescription="@string/user_background" />
 
@@ -28,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/tiktok_logo"
                 android:layout_margin="10dp"/>
 
             <LinearLayout
@@ -46,19 +47,18 @@
                         android:id="@+id/edit_info_button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_weight="3"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
                         android:textSize="18sp"
                         android:text="@string/edit_info" />
 
                     <Button
-                        android:id="@+id/add_friend_button"
+                        android:id="@+id/begin_login_button"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
                         android:textSize="18sp"
                         android:text="@string/login" />
                 </LinearLayout>
@@ -69,13 +69,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:text="@string/not_login"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textSize="24sp" />
             </LinearLayout>
 
         </LinearLayout>
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_video_view"

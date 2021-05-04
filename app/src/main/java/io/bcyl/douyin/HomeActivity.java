@@ -1,11 +1,15 @@
 package io.bcyl.douyin;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,14 +20,24 @@ import io.bcyl.douyin.Fragment.Home.HomeFragment;
 import io.bcyl.douyin.Fragment.User.UserFragment;
 
 public class HomeActivity extends AppCompatActivity {
-    private Fragment mFragmentHome,mFragmentAdd,mFragmentUser;
-    final int FRAGMENT_HOME =0, FRAGMENT_ADD =1, FRAGMENT_USER =2;
+    private Fragment mFragmentHome, mFragmentAdd, mFragmentUser;
+    final int FRAGMENT_HOME = 0, FRAGMENT_ADD = 1, FRAGMENT_USER = 2;
+    public static boolean logged;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        SharedPreferences preferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        logged = preferences.getBoolean("logged", false);
         initView();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        logged = data.getBooleanExtra("logged", false);
     }
 
     private void initView() {
@@ -79,7 +93,6 @@ public class HomeActivity extends AppCompatActivity {
                     transaction.add(R.id.main_container, mFragmentUser);
                 } else {
                     transaction.show(mFragmentUser);
-
                 }
                 break;
         }

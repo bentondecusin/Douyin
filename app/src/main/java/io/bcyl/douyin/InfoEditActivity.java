@@ -22,6 +22,7 @@ public class InfoEditActivity extends AppCompatActivity {
 
         headerView = (ImageView) findViewById(R.id.head_edit_view);
         userEdit = (EditText) findViewById(R.id.user_edit);
+
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +41,7 @@ public class InfoEditActivity extends AppCompatActivity {
                 Intent intent =new Intent();
                 intent.putExtra("userName",curUserName);
                 //intent.putExtra("headerUrl",)
-                setResult(UserFragment.REQUEST_UPDATE_USER,intent);
+                setResult(UserFragment.INFO_EDIT_CODE,intent);
                 finish();
             }
         });

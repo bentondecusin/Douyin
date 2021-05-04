@@ -9,7 +9,8 @@ import android.os.Looper;
 
 public class MainActivity extends AppCompatActivity {
     private Handler mHandler =new Handler(Looper.getMainLooper());
-
+    private Boolean logged =false;
+    private static final int CHECK_LOGGED_CODE=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                Intent intent =new Intent(MainActivity.this,HomeActivity.class);
+                intent.putExtra("logged",logged);
+                startActivityForResult(intent,CHECK_LOGGED_CODE);
             }
         },3000);
 

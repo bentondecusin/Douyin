@@ -35,4 +35,10 @@
     <string name="user_edit">修改用户名</string>
     <string name="confirm_edit_info">确认修改</string>
     <string name="login">登录</string>
+    <string name="userName">用户名</string>
+    <string name="please_input_userName">请输入您的用户名</string>
+    <string name="password">密码</string>
+    <string name="please_input_password">请输入您的密码</string>
+    <string name="register">未注册？创建账号</string>
+    <string name="not_login">您还未登录</string>
 </resources>
