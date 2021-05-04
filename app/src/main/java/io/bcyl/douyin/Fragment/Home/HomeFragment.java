@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /**
+        /*
          * For now we are using sentinel data
          */
         VideoItem src1=new VideoItem(getString(R.string.meme1),"Hugh Jaz 1","Shiba");
@@ -105,11 +106,11 @@ public class HomeFragment extends Fragment {
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
 
-        new Handler().postDelayed(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(0);
-                if (viewHolder != null && viewHolder instanceof VideoViewHolder)
+                if (viewHolder instanceof VideoViewHolder)
                     ((VideoViewHolder) viewHolder).getPlayer().play();
             }
         },200);
