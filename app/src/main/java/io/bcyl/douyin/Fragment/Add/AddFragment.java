@@ -1,5 +1,7 @@
 package io.bcyl.douyin.Fragment.Add;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
@@ -7,6 +9,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -82,9 +85,32 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mRecordButton = view.findViewById(R.id.bt_record);
 
         mHolder = mSurfaceView.getHolder();
+        requestPermission();
 
-        initCamera();
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                record(mVideoView);
+            }
+        });
+    }
+
+
+    private void requestPermission() {
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 1);
+        }
+        if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO)) {
+            requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
+        }
+        initCamera();
+        mHolder.addCallback(this);
     }
 
     private void initCamera() {
