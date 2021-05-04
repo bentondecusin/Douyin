@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
@@ -28,7 +29,7 @@ import io.bcyl.douyin.Utils.VideoItem;
 public class HomeFragment extends Fragment {
     private static final String TAG = HomeFragment.class.getName();
     private LinearLayoutManager layoutManager;
-    private SnapHelper snapHelper;
+    private PagerSnapHelper snapHelper;
     private static final String ARG_PARAM = "param";
     private View view;
     private View v;
@@ -101,7 +102,7 @@ public class HomeFragment extends Fragment {
         mAdapter.setRecyclerView(mRecyclerView);
 
 
-        snapHelper = new LinearSnapHelper();
+        snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
 
         new Handler().postDelayed(new Runnable() {
