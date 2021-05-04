@@ -1,4 +1,4 @@
-package io.bcyl.douyin;
+package io.bcyl.douyin.Fragment.Home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,11 +14,11 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.MimeTypes;
 
-import io.bcyl.douyin.Fragment.Home.HomeFragment;
+import io.bcyl.douyin.R;
 
 public class VideoViewHolder extends RecyclerView.ViewHolder{
     private static final String TAG = HomeFragment.class.getName();
-    private PlayerView playerView;
+    private final PlayerView playerView;
     private SimpleExoPlayer player;
     private int currentWindow = 0;
     private long playbackPosition = 0;

@@ -3,7 +3,6 @@ package io.bcyl.douyin.Fragment.User;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import io.bcyl.douyin.InfoEditActivity;
 import io.bcyl.douyin.R;
+import io.bcyl.douyin.Utils.VideoItem;
 
 public class UserFragment extends Fragment {
     public static final int REQUEST_EDIT_CODE=0;
@@ -77,7 +77,7 @@ public class UserFragment extends Fragment {
 
     private void initData(){
         for (int i=0;i<20;i++){
-            VideoItem item = new VideoItem("Url"+i,"myText"+i);
+            VideoItem item = new VideoItem("Url"+i,"myText"+i,"user"+i);
             itemList.add(item);
         }
     }

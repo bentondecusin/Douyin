@@ -1,12 +1,9 @@
-package io.bcyl.douyin;
+package io.bcyl.douyin.Fragment.Home;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,12 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.bcyl.douyin.R;
+import io.bcyl.douyin.Utils.VideoItem;
+
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
-    List<String[]> srcList;
+    List<VideoItem> videoItemList;
     Context context;
     private RecyclerView recyclerView;
-    public VideoAdapter(ArrayList<String[]> list, Context context) {
-        this.srcList = list;
+    public VideoAdapter(ArrayList<VideoItem> list, Context context) {
+        this.videoItemList = list;
         this.context = context;
     }
 
@@ -35,9 +35,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull VideoViewHolder videoViewHolder, int i) {
-        videoViewHolder.url = srcList.get(i)[0];
-        videoViewHolder.usrName.setText(srcList.get(i)[1]);
-        videoViewHolder.vidTitle.setText(srcList.get(i)[2]);
+        videoViewHolder.url = videoItemList.get(i).getVideoUrl();
+        videoViewHolder.usrName.setText(videoItemList.get(i).getUserName());
+        videoViewHolder.vidTitle.setText(videoItemList.get(i).getTitle());
         videoViewHolder.initializePlayer();;
     }
 
@@ -76,7 +76,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 
     @Override
     public int getItemCount() {
-        return srcList.size();
+        return videoItemList.size();
     }
 
 

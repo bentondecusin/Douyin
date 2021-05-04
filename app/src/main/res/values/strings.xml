@@ -34,4 +34,5 @@
     <string name="head_edit">点击更换头像</string>
     <string name="user_edit">修改用户名</string>
     <string name="confirm_edit_info">确认修改</string>
+    <string name="login">登录</string>
 </resources>

@@ -10,10 +10,10 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.bcyl.douyin.R;
+import io.bcyl.douyin.Utils.VideoItem;
 
 public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.UserVideoHolder> {
 
@@ -26,12 +26,12 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
     static class UserVideoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         VideoView videoView;
-        TextView textView;
+        TextView videoTitleView;
 
         public UserVideoHolder(@NonNull View itemView) {
             super(itemView);
             videoView = (VideoView) itemView.findViewById(R.id.item_video);
-            textView = (TextView) itemView.findViewById(R.id.item_text);
+            videoTitleView = (TextView) itemView.findViewById(R.id.item_title);
         }
 
         @Override
@@ -51,7 +51,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
     @Override
     public void onBindViewHolder(@NonNull UserVideoHolder holder, int position) {
         VideoItem item =myVideoItems.get(position);
-        holder.textView.setText(item.getText());
+        holder.videoTitleView.setText(item.getTitle());
 
         //holder.videoView.setVideoPath(item.getVideoUrl()); 当前没有video
     }

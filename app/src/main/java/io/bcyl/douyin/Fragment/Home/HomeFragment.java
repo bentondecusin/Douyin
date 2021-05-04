@@ -1,7 +1,5 @@
 package io.bcyl.douyin.Fragment.Home;
 
-import android.annotation.SuppressLint;
-import android.graphics.Canvas;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,27 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.widget.RelativeLayout;
-
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.util.MimeTypes;
-import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.bcyl.douyin.R;
-import io.bcyl.douyin.VideoAdapter;
-import io.bcyl.douyin.VideoViewHolder;
+import io.bcyl.douyin.Utils.VideoItem;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +38,7 @@ public class HomeFragment extends Fragment {
     /**
      * For now we are using sentinel data
      */
-    ArrayList<String[]> srcList = new ArrayList<String[]>();
+    ArrayList<VideoItem> videoList = new ArrayList<VideoItem>();
     RecyclerView mRecyclerView;
     VideoAdapter mAdapter;
     public HomeFragment() {
@@ -73,30 +59,30 @@ public class HomeFragment extends Fragment {
         /**
          * For now we are using sentinel data
          */
-        String src1[]={getString(R.string.meme1),"Hugh Jaz 1","Shiba"};
-        String src2[]={getString(R.string.meme2),"Hugh Jaz 2","Birdie"};
-        String src3[]={getString(R.string.meme3),"Hugh Jaz 3","Horses in Walmart"};
-        String src4[]={getString(R.string.meme4),"Hugh Jaz 4","Sad Dog"};
-        String src5[]={getString(R.string.meme5),"Hugh Jaz 5","Omegle"};
-        String src6[]={getString(R.string.meme6),"Hugh Jaz 6","Dank cat"};
-        String src7[]={getString(R.string.meme7),"Hugh Jaz 7","Watch it!"};
-        String src8[]={getString(R.string.meme8),"Hugh Jaz 8","War face"};
+        VideoItem src1=new VideoItem(getString(R.string.meme1),"Hugh Jaz 1","Shiba");
+        VideoItem src2=new VideoItem(getString(R.string.meme2),"Hugh Jaz 2","Birdie");
+        VideoItem src3=new VideoItem(getString(R.string.meme3),"Hugh Jaz 3","Horses in Walmart");
+        VideoItem src4=new VideoItem(getString(R.string.meme4),"Hugh Jaz 4","Sad Dog");
+        VideoItem src5=new VideoItem(getString(R.string.meme5),"Hugh Jaz 5","Omegle");
+        VideoItem src6=new VideoItem(getString(R.string.meme6),"Hugh Jaz 6","Dank cat");
+        VideoItem src7=new VideoItem(getString(R.string.meme7),"Hugh Jaz 7","Watch it!");
+        VideoItem src8=new VideoItem(getString(R.string.meme8),"Hugh Jaz 8","War face");
 
-        srcList.add(src1);
-        srcList.add(src8);
-        srcList.add(src7);
-        srcList.add(src4);
-        srcList.add(src5);
-        srcList.add(src2);
-        srcList.add(src3);
-        srcList.add(src6);
-        srcList.add(src1);
-        srcList.add(src2);
-        srcList.add(src3);
-        srcList.add(src4);
-        srcList.add(src5);
-        srcList.add(src6);
-        srcList.add(src7);
+        videoList.add(src1);
+        videoList.add(src8);
+        videoList.add(src7);
+        videoList.add(src4);
+        videoList.add(src5);
+        videoList.add(src2);
+        videoList.add(src3);
+        videoList.add(src6);
+        videoList.add(src1);
+        videoList.add(src2);
+        videoList.add(src3);
+        videoList.add(src4);
+        videoList.add(src5);
+        videoList.add(src6);
+        videoList.add(src7);
     }
 
     public void onStart(){
@@ -110,7 +96,7 @@ public class HomeFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView = view.findViewById(R.id.rvVid);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new VideoAdapter(srcList, getActivity());
+        mAdapter = new VideoAdapter(videoList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setRecyclerView(mRecyclerView);
 
@@ -134,7 +120,7 @@ public class HomeFragment extends Fragment {
                 v = snapHelper.findSnapView(layoutManager);
                 pos = layoutManager.getPosition(v);
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(pos);
-                if (viewHolder != null && viewHolder instanceof VideoViewHolder)
+                if (viewHolder instanceof VideoViewHolder)
                     ((VideoViewHolder) viewHolder).getPlayer().play();
             }
 
