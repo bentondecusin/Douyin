@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Douyin">
         <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".UploadVideoActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
