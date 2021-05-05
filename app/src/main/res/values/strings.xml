@@ -42,4 +42,6 @@
     <string name="please_input_password">请输入您的密码</string>
     <string name="register">未注册？创建账号</string>
     <string name="not_login">您还未登录</string>
+    <string name="confirm">发布一下</string>
+    <string name="cancel">再想想</string>
 </resources>

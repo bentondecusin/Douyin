@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdateVideoActivity">
+
+    <VideoView
+        android:id="@+id/Edit_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_button"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical|center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/bt_confirm"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_button"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:layout_gravity="center_vertical|center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
+
+</FrameLayout>

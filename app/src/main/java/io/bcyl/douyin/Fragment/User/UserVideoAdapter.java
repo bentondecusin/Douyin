@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -25,12 +26,12 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
     }
 
     static class UserVideoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        VideoView videoView;
+        ImageView videoPreview;
         TextView videoTitleView;
 
         public UserVideoHolder(@NonNull View itemView) {
             super(itemView);
-            videoView = (VideoView) itemView.findViewById(R.id.item_video);
+            videoPreview = (ImageView) itemView.findViewById(R.id.item_preview);
             videoTitleView = (TextView) itemView.findViewById(R.id.item_title);
         }
 
@@ -50,9 +51,9 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
     @Override
     public void onBindViewHolder(@NonNull UserVideoHolder holder, int position) {
-        VideoItem item =myVideoItems.get(position);
+        VideoItem item = myVideoItems.get(position);
         holder.videoTitleView.setText(item.getTitle());
-
+        // TODO init Video
         //holder.videoView.setVideoPath(item.getVideoUrl()); 当前没有video
     }
 

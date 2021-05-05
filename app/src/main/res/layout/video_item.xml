@@ -3,8 +3,8 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <VideoView
-        android:id="@+id/item_video"
+    <ImageView
+        android:id="@+id/item_preview"
         android:layout_margin="10dp"
         android:layout_width="120dp"
         android:background="@color/black"
