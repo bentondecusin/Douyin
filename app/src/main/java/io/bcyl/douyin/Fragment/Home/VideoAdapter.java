@@ -13,13 +13,20 @@ import java.util.List;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.VideoItem;
+import io.bcyl.douyin.VideoInfo;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
-    List<VideoItem> videoItemList;
+//    List<VideoItem> videoItemList = new ArrayList<VideoItem>();
+    List<VideoInfo> videoInfoList;
     Context context;
     private RecyclerView recyclerView;
-    public VideoAdapter(ArrayList<VideoItem> list, Context context) {
-        this.videoItemList = list;
+//    public VideoAdapter(ArrayList<VideoItem> list, Context context) {
+//        this.videoItemList = list;
+//        this.context = context;
+//    }
+
+    public VideoAdapter(ArrayList<VideoInfo> list, Context context) {
+        this.videoInfoList = list;
         this.context = context;
     }
 
@@ -35,9 +42,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull VideoViewHolder videoViewHolder, int i) {
-        videoViewHolder.url = videoItemList.get(i).getVideoUrl();
-        videoViewHolder.usrName.setText(videoItemList.get(i).getUserName());
-        videoViewHolder.vidTitle.setText(videoItemList.get(i).getTitle());
+//        videoViewHolder.url = videoItemList.get(i).getVideoUrl();
+//        videoViewHolder.usrName.setText(videoItemList.get(i).getUserName());
+//        videoViewHolder.vidTitle.setText(videoItemList.get(i).getTitle());
+        videoViewHolder.url = videoInfoList.get(i).getVideoUrl();
+        videoViewHolder.usrName.setText(videoInfoList.get(i).getUserName());
+        videoViewHolder.vidTitle.setText(videoInfoList.get(i).getExtraValue());
         videoViewHolder.initializePlayer();;
     }
 
@@ -76,9 +86,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 
     @Override
     public int getItemCount() {
-        return videoItemList.size();
+        return videoInfoList.size();
     }
 
+
+    public void setData(List<VideoInfo> vl) {
+        videoInfoList.clear();
+        videoInfoList.addAll(vl);
+        notifyDataSetChanged();
+    }
 
 
 }

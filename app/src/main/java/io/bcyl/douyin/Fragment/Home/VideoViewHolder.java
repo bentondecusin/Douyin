@@ -33,8 +33,8 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         usrName   = itemView.findViewById(R.id.usrName);
         vidTitle  = itemView.findViewById(R.id.vidTitle);
         playerView = itemView.findViewById(R.id.video_view);
-
     }
+
 
     public void initializePlayer() {
         player = new SimpleExoPlayer.Builder(context).build();

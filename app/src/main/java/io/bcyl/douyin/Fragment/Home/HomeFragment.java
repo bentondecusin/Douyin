@@ -46,10 +46,10 @@ public class HomeFragment extends Fragment {
     private LinearLayoutManager layoutManager;
     private PagerSnapHelper snapHelper;
     private static final String ARG_PARAM = "param";
+    List<VideoInfo> vl = new ArrayList<>();
     private View view;
     private View v;
     private int pos;
-
 
     /**
      * For now we are using sentinel data
@@ -72,6 +72,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getData(null);
+
         /*
          * For now we are using sentinel data
          */
@@ -103,24 +105,19 @@ public class HomeFragment extends Fragment {
 
     public void onStart(){
         super.onStart();
+        getData(null);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        List<VideoInfo> vil = dataGetFromRemote();
-        for (VideoInfo i : vil)
-            videoList.add(new VideoItem(i.getVideoUrl(), i.getId(), i.getUserName()));
-
+        mAdapter = new VideoAdapter((ArrayList<VideoInfo>) vl, getActivity());
         view = inflater.inflate(R.layout.fragment_home, container, false);
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView = view.findViewById(R.id.rvVid);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new VideoAdapter(videoList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setRecyclerView(mRecyclerView);
-
-
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
 
@@ -132,7 +129,6 @@ public class HomeFragment extends Fragment {
                     ((VideoViewHolder) viewHolder).getPlayer().play();
             }
         },200);
-
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -196,12 +192,13 @@ public class HomeFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<VideoInfo> vl = dataGetFromRemote(usrId);
+//                List<VideoInfo>
+                vl = dataGetFromRemote(usrId);
                 if (vl != null && !vl.isEmpty()){
                     new Handler(getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-//                            adapter.setData(messageList);
+                            mAdapter.setData(vl);
                         }
                     });
                 }

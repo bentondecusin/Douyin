@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import io.bcyl.douyin.Fragment.Home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
     private Handler mHandler =new Handler(Looper.getMainLooper());
@@ -18,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // jump to HomeActivity after delay
         mHandler.postDelayed(new Runnable() {
             @Override
@@ -28,5 +28,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent,CHECK_LOGGED_CODE);
             }
         },3000);
+
     }
 }
