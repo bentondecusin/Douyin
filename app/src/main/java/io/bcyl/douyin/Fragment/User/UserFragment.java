@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.bcyl.douyin.HomeActivity;
-import io.bcyl.douyin.InfoEditActivity;
 import io.bcyl.douyin.LoginActivity;
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.VideoItem;
 
 public class UserFragment extends Fragment {
-    public static final int INFO_EDIT_CODE = 0;
     public static final int LOGIN_CODE = 1;
     private final List<VideoItem> itemList = new ArrayList<>();
     private ImageView headImageView;
@@ -65,20 +62,10 @@ public class UserFragment extends Fragment {
             }
         };
 
-        Button infoEditButton = (Button) userFragmentView.findViewById(R.id.edit_info_button);
+
         loginButton = (Button) userFragmentView.findViewById(R.id.begin_login_button);
 
         initView(userFragmentView);
-        infoEditButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), InfoEditActivity.class);
-                // TODO 传入图片
-                //intent.putExtra("headerImage","headerUrl");
-                intent.putExtra("userName", userNameView.getText().toString());
-                startActivityForResult(intent, INFO_EDIT_CODE);
-            }
-        });
 
         return userFragmentView;
     }
@@ -91,8 +78,6 @@ public class UserFragment extends Fragment {
         if (logged) {
             String curUserName=preferences.getString("userName", getString(R.string.not_login));
             userNameView.setText(curUserName);
-            // TODO headImage form preferences
-            //headImageView.setImageResource(R.mipmap.tiktok_logo);
             initData(curUserName);
         }
 
@@ -115,14 +100,10 @@ public class UserFragment extends Fragment {
 
         String curUserName = data.getStringExtra("userName");
         userNameView.setText(curUserName);
-
-        // TODO add header
         if (resultCode == LOGIN_CODE) {
             setLoginButton(true);
             initData(curUserName);
         }
-        //String curHeader=data.getStringExtra("headerUrl");
-        //headImageView.setImageBitmap();
     }
 
     private void setLoginButton(boolean logged) {

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#292929"
+    android:background="@color/black"
     android:orientation="vertical">
 
     <com.google.android.exoplayer2.ui.PlayerView
@@ -21,41 +21,39 @@
                 android:layout_height="35dp"
                 android:layout_alignBottom="@id/vidTitle"
                 android:layout_marginBottom="30dp"
-                android:background="#000000"
-                android:fontFamily="monospace"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:background="@color/black"
+
                 android:text="@string/at"
-                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:textSize="25dp" />
 
             <TextView
                 android:id="@+id/usrName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_above="@+id/vidTitle"
-                android:layout_marginStart="0dp"
-                android:layout_marginBottom="0dp"
+
                 android:layout_toEndOf="@+id/at"
-                android:background="#ffa31a"
-                android:fontFamily="monospace"
+                android:background="@color/black"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
                 android:shadowRadius="5"
                 android:text="usrName"
-                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <TextView
                 android:id="@+id/vidTitle"
                 android:layout_width="match_parent"
                 android:layout_height="30sp"
+                android:layout_marginStart="30dp"
                 android:layout_alignParentBottom="true"
-                android:background="#33FFBB33"
-                android:fontFamily="monospace"
+                android:background="@color/black"
                 android:text="title"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </RelativeLayout>
 
     </com.google.android.exoplayer2.ui.PlayerView>
