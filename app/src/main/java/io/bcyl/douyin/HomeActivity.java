@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (mFragmentHome == null) {
                     mFragmentHome = new HomeFragment();
                     transaction.add(R.id.main_container, mFragmentHome);
+
                 } else {
                     transaction.show(mFragmentHome);
                 }
@@ -83,6 +84,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (mFragmentAdd == null) {
                     mFragmentAdd = new AddFragment();
                     transaction.add(R.id.main_container, mFragmentAdd);
+
                 } else {
                     transaction.show(mFragmentAdd);
                 }
@@ -96,6 +98,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
         }
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

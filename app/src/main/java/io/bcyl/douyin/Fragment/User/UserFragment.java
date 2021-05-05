@@ -75,7 +75,7 @@ public class UserFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), InfoEditActivity.class);
                 // TODO 传入图片
                 //intent.putExtra("headerImage","headerUrl");
-                intent.putExtra("userName", userNameView.getText());
+                intent.putExtra("userName", userNameView.getText().toString());
                 startActivityForResult(intent, INFO_EDIT_CODE);
             }
         });

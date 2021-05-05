@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,8 +53,7 @@ public class InfoEditActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         String curUserName = data.getStringExtra("userName");
         //String headerUri=savedInstanceState.getString("headerUrl");
-
-
+        Log.d("MyEdit",curUserName);
         userEdit.setText(curUserName);
 
         // TODO 设置当前图片

@@ -6,6 +6,7 @@ public class VideoItem {
     private final String userName;
     private final String title;
 
+
     public VideoItem(String videoUrl, String title,String userName) {
         this.videoUrl = videoUrl;
         this.title=title;
