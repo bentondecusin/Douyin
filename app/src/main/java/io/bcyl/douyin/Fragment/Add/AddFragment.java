@@ -1,11 +1,13 @@
 package io.bcyl.douyin.Fragment.Add;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.bcyl.douyin.R;
+import io.bcyl.douyin.UpdateVideoActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -190,6 +194,9 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             mVideoView.setVisibility(View.VISIBLE);
             mVideoView.setVideoPath(mp4Path);
             mVideoView.start();
+            Intent intent = new Intent(getActivity().getApplicationContext(), UpdateVideoActivity.class);
+            intent.putExtra("mp4Path", mp4Path);
+            startActivity(intent);
         } else {
             if(prepareVideoRecorder()) {
                 mRecordButton.setText("暂停");
@@ -197,6 +204,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             }
         }
         isRecording = !isRecording;
+
     }
 
 
@@ -216,6 +224,9 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         return mediaFile.getAbsolutePath();
     }
 
+    private Uri getMediaPath() {
+        return null;
+    }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {

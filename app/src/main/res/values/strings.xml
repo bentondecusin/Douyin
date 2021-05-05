@@ -25,7 +25,8 @@
     <string name="at">@</string>
     <string name="usrName">用户名</string>
     <string name="vidTitle">视频标题</string>
-
+    <string name="identifier">t0</string>
+    <string name="BDurl">https://api-sjtu-camp-2021.bytedance.com/homework/invoke</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_info">编辑资料</string>
@@ -41,4 +42,6 @@
     <string name="please_input_password">请输入您的密码</string>
     <string name="register">未注册？创建账号</string>
     <string name="not_login">您还未登录</string>
+    <string name="confirm">发布一下</string>
+    <string name="cancel">再想想</string>
 </resources>
