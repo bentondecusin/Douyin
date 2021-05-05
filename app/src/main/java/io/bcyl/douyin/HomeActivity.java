@@ -11,23 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import io.bcyl.douyin.Fragment.Add.AddFragment;
 import io.bcyl.douyin.Fragment.Home.HomeFragment;
 import io.bcyl.douyin.Fragment.User.UserFragment;
 
-public class HomeActivity extends AppCompatActivity {
-    private Fragment mFragmentHome, mFragmentAdd, mFragmentUser;
-    final int FRAGMENT_HOME = 0, FRAGMENT_ADD = 1, FRAGMENT_USER = 2;
+public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+    private Fragment mFragmentHome = new HomeFragment();
+    private Fragment mFragmentAdd = new AddFragment();
+    private Fragment mFragmentUser = new UserFragment();
+
     public static boolean logged;
     private BottomNavigationView mBottomNavigationView;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         SharedPreferences preferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
         logged = preferences.getBoolean("logged", false);
         initView();
@@ -35,77 +39,57 @@ public class HomeActivity extends AppCompatActivity {
 
     private void initView() {
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.addOnPageChangeListener(this);
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return mFragmentHome;
+                    case 1:
+                        return mFragmentAdd;
+                    case 2:
+                        return mFragmentUser;
+                }
+                return null;
+            }
+
+            @Override
+            public int getCount() {
+                return 3;
+            }
+        });
+
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_home:
-                        showFragment(FRAGMENT_HOME);
-                        mFragmentHome.onResume();
-                        return true;
-                    case R.id.menu_add:
-                        showFragment(FRAGMENT_ADD);
-                        mFragmentHome.onPause();
-                        return true;
-                    case R.id.menu_user:
-                        showFragment(FRAGMENT_USER);
-                        mFragmentHome.onPause();
-                        return true;
-                }
-                return false;
+                viewPager.setCurrentItem(item.getOrder());
+                return true;
             }
         });
-        showFragment(FRAGMENT_HOME);
     }
 
 
-    private void showFragment(int index) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        hideFragment(transaction);
-        switch (index) {
-            case FRAGMENT_HOME:
-                if (mFragmentHome == null) {
-                    mFragmentHome = new HomeFragment();
-                    transaction.add(R.id.main_container, mFragmentHome);
-
-                } else {
-                    transaction.show(mFragmentHome);
-                }
-                break;
-            case FRAGMENT_ADD:
-                if (mFragmentAdd == null) {
-                    mFragmentAdd = new AddFragment();
-                    transaction.add(R.id.main_container, mFragmentAdd);
-
-                } else {
-                    transaction.show(mFragmentAdd);
-                }
-                break;
-            case FRAGMENT_USER:
-                if (mFragmentUser == null) {
-                    mFragmentUser = new UserFragment();
-                    transaction.add(R.id.main_container, mFragmentUser);
-                } else {
-                    transaction.show(mFragmentUser);
-                }
-                break;
-        }
-        transaction.commit();
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
 
-    //隐藏
-    private void hideFragment(FragmentTransaction transaction) {
-        if (mFragmentHome != null) {
-            transaction.hide(mFragmentHome);
-        }
-        if (mFragmentAdd != null) {
-            transaction.hide(mFragmentAdd);
-        }
-        if (mFragmentUser != null) {
-            transaction.hide(mFragmentUser);
-        }
+    @Override
+    public void onPageSelected(int position) {
+        mBottomNavigationView.getMenu().getItem(position).setChecked(true);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
