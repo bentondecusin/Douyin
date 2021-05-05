@@ -5,13 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,8 +30,8 @@ import java.util.List;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.VideoItem;
-import io.bcyl.douyin.VideoInfo;
-import io.bcyl.douyin.VideoInfoList;
+import io.bcyl.douyin.Model.VideoInfo;
+import io.bcyl.douyin.Model.VideoInfoList;
 
 import static android.os.Looper.getMainLooper;
 

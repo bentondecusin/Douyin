@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -30,7 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import io.bcyl.douyin.R;
-import io.bcyl.douyin.UpdateVideoActivity;
+import io.bcyl.douyin.UploadVideoActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,7 +84,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add, container, false);
         mSurfaceView = view.findViewById(R.id.surfaceview);
-        mVideoView = view.findViewById(R.id.videoview);
+
         mRecordButton = view.findViewById(R.id.bt_record);
 
         mHolder = mSurfaceView.getHolder();
@@ -191,10 +190,10 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             mMediaRecorder = null;
             mCamera.lock();
 
-            mVideoView.setVisibility(View.VISIBLE);
-            mVideoView.setVideoPath(mp4Path);
-            mVideoView.start();
-            Intent intent = new Intent(getActivity().getApplicationContext(), UpdateVideoActivity.class);
+//            mVideoView.setVisibility(View.VISIBLE);
+//            mVideoView.setVideoPath(mp4Path);
+//            mVideoView.start();
+            Intent intent = new Intent(getActivity().getApplicationContext(), UploadVideoActivity.class);
             intent.putExtra("mp4Path", mp4Path);
             startActivity(intent);
         } else {

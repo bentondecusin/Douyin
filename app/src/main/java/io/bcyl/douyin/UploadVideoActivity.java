@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.VideoView;
 
-public class UpdateVideoActivity extends AppCompatActivity {
+public class UploadVideoActivity extends AppCompatActivity {
 
     private String mp4Path;
     private VideoView videoView;
@@ -21,7 +21,7 @@ public class UpdateVideoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_video);
+        setContentView(R.layout.activity_upload_video);
         Intent intent = getIntent();
         mp4Path = intent.getStringExtra("mp4Path");
         videoView = findViewById(R.id.Edit_view);
