@@ -17,10 +17,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.VideoItem;
+import io.bcyl.douyin.VideoInfo;
+import io.bcyl.douyin.VideoInfoList;
+
+import static android.os.Looper.getMainLooper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,30 +75,30 @@ public class HomeFragment extends Fragment {
         /*
          * For now we are using sentinel data
          */
-        VideoItem src1=new VideoItem(getString(R.string.meme1),"Hugh Jaz 1","Shiba");
-        VideoItem src2=new VideoItem(getString(R.string.meme2),"Hugh Jaz 2","Birdie");
-        VideoItem src3=new VideoItem(getString(R.string.meme3),"Hugh Jaz 3","Horses in Walmart");
-        VideoItem src4=new VideoItem(getString(R.string.meme4),"Hugh Jaz 4","Sad Dog");
-        VideoItem src5=new VideoItem(getString(R.string.meme5),"Hugh Jaz 5","Omegle");
-        VideoItem src6=new VideoItem(getString(R.string.meme6),"Hugh Jaz 6","Dank cat");
-        VideoItem src7=new VideoItem(getString(R.string.meme7),"Hugh Jaz 7","Watch it!");
-        VideoItem src8=new VideoItem(getString(R.string.meme8),"Hugh Jaz 8","War face");
-
-        videoList.add(src1);
-        videoList.add(src8);
-        videoList.add(src7);
-        videoList.add(src4);
-        videoList.add(src5);
-        videoList.add(src2);
-        videoList.add(src3);
-        videoList.add(src6);
-        videoList.add(src1);
-        videoList.add(src2);
-        videoList.add(src3);
-        videoList.add(src4);
-        videoList.add(src5);
-        videoList.add(src6);
-        videoList.add(src7);
+//        VideoItem src1=new VideoItem(getString(R.string.meme1),"Hugh Jaz 1","Shiba");
+//        VideoItem src2=new VideoItem(getString(R.string.meme2),"Hugh Jaz 2","Birdie");
+//        VideoItem src3=new VideoItem(getString(R.string.meme3),"Hugh Jaz 3","Horses in Walmart");
+//        VideoItem src4=new VideoItem(getString(R.string.meme4),"Hugh Jaz 4","Sad Dog");
+//        VideoItem src5=new VideoItem(getString(R.string.meme5),"Hugh Jaz 5","Omegle");
+//        VideoItem src6=new VideoItem(getString(R.string.meme6),"Hugh Jaz 6","Dank cat");
+//        VideoItem src7=new VideoItem(getString(R.string.meme7),"Hugh Jaz 7","Watch it!");
+//        VideoItem src8=new VideoItem(getString(R.string.meme8),"Hugh Jaz 8","War face");
+//
+//        videoList.add(src1);
+//        videoList.add(src8);
+//        videoList.add(src7);
+//        videoList.add(src4);
+//        videoList.add(src5);
+//        videoList.add(src2);
+//        videoList.add(src3);
+//        videoList.add(src6);
+//        videoList.add(src1);
+//        videoList.add(src2);
+//        videoList.add(src3);
+//        videoList.add(src4);
+//        videoList.add(src5);
+//        videoList.add(src6);
+//        videoList.add(src7);
     }
 
     public void onStart(){
@@ -94,6 +108,10 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        List<VideoInfo> vil = dataGetFromRemote();
+        for (VideoInfo i : vil)
+            videoList.add(new VideoItem(i.getVideoUrl(), i.getId(), i.getUserName()));
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView = view.findViewById(R.id.rvVid);
@@ -106,7 +124,7 @@ public class HomeFragment extends Fragment {
         snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(mRecyclerView);
 
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 RecyclerView.ViewHolder viewHolder = mRecyclerView.findViewHolderForAdapterPosition(0);
@@ -169,6 +187,53 @@ public class HomeFragment extends Fragment {
         super.onStop();
         Log.i(TAG,"On stop");
         pauseCurrentVideo();
+    }
+    public List<VideoInfo> dataGetFromRemote() {
+        return dataGetFromRemote(null);
+    }
+
+    private void getData(String usrId){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<VideoInfo> vl = dataGetFromRemote(usrId);
+                if (vl != null && !vl.isEmpty()){
+                    new Handler(getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+//                            adapter.setData(messageList);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    public List<VideoInfo> dataGetFromRemote(String usrId){
+        final String BASE_URL = getString(R.string.BDurl) + "/video?student_id=" + getString(R.string.identifier);
+        String urlStr = BASE_URL;
+        if (usrId != null) urlStr = BASE_URL + usrId;
+        List<VideoInfo> vidList = null;
+        try{
+            URL url = new URL(urlStr);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(2000);
+            conn.setRequestMethod("GET");
+            int status = conn.getResponseCode();
+            if (status == 200){
+                InputStream in = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+                VideoInfoList vl = new Gson().fromJson(reader, new TypeToken<VideoInfoList>(){
+                }.getType());
+                vidList = vl.feeds;
+                reader.close();
+                in.close();
+            }
+            else throw new Exception(Integer.toString(status));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return vidList;
     }
 
 

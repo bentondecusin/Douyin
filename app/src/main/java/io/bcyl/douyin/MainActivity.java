@@ -15,13 +15,13 @@ import org.bson.Document;
 
 import java.util.function.Consumer;
 
-import io.bcyl.douyin.Utils.UseDataBase;
+//import io.bcyl.douyin.Utils.UseDataBase;
 
 public class MainActivity extends AppCompatActivity {
     private Handler mHandler =new Handler(Looper.getMainLooper());
     private Boolean logged =false;
     private static final int CHECK_LOGGED_CODE=1;
-    private static UseDataBase dataBase;
+//    private static UseDataBase dataBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         },3000);
 
-        dataBase= new UseDataBase();
+//        dataBase= new UseDataBase();
 
         Consumer<Document> printConsumer = new Consumer<Document>() {
             @Override
@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        FindIterable<Document> result=dataBase.query("userInfo",Filters.eq("userName","user1"));
-        result.forEach(printConsumer);
+//        FindIterable<Document> result=dataBase.query("userInfo",Filters.eq("userName","user1"));
+//        result.forEach(printConsumer);
 
     }
 }
