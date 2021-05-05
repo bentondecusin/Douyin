@@ -2,16 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
+        android:orderInCategory="0"
         android:icon="@drawable/ic_home_white_24dp"
         android:title="@string/home"/>
 
     <item
         android:id="@+id/menu_add"
+        android:orderInCategory="1"
         android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/add"/>
 
     <item
         android:id="@+id/menu_user"
+        android:orderInCategory="2"
         android:icon="@drawable/ic_user_white_24dp"
         android:title="@string/user"/>
 </menu>

@@ -20,9 +20,9 @@ import io.bcyl.douyin.Fragment.Home.HomeFragment;
 import io.bcyl.douyin.Fragment.User.UserFragment;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
-    private Fragment mFragmentHome = new HomeFragment();
-    private Fragment mFragmentAdd = new AddFragment();
-    private Fragment mFragmentUser = new UserFragment();
+    private final Fragment mFragmentHome = new HomeFragment();
+    private final Fragment mFragmentAdd = new AddFragment();
+    private final Fragment mFragmentUser = new UserFragment();
 
     public static boolean logged;
     private BottomNavigationView mBottomNavigationView;
@@ -71,7 +71,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         });
     }
-
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
