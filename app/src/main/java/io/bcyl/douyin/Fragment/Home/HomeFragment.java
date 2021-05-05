@@ -107,7 +107,6 @@ public class HomeFragment extends Fragment {
 
     public void onStart(){
         super.onStart();
-        getData(null);
     }
 
     @Override
