@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_home"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_home_white_24dp"
         android:title="@string/home"/>
 
     <item
         android:id="@+id/menu_add"
-        android:icon="@drawable/ic_add_black_24dp"
+        android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/add"/>
 
     <item
         android:id="@+id/menu_user"
-        android:icon="@drawable/ic_user_black_24dp"
+        android:icon="@drawable/ic_user_white_24dp"
         android:title="@string/user"/>
 </menu>

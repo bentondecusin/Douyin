@@ -21,6 +21,7 @@ public class HomeActivity extends AppCompatActivity {
     private Fragment mFragmentHome, mFragmentAdd, mFragmentUser;
     final int FRAGMENT_HOME = 0, FRAGMENT_ADD = 1, FRAGMENT_USER = 2;
     public static boolean logged;
+    private BottomNavigationView mBottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        BottomNavigationView mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -57,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         showFragment(FRAGMENT_HOME);
     }
+
 
     private void showFragment(int index) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -90,8 +92,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 break;
         }
-        transaction.addToBackStack(null);
         transaction.commit();
+
     }
 
     //隐藏
