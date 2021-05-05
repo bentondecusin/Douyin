@@ -6,23 +6,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import io.bcyl.douyin.Model.VideoInfo;
 import io.bcyl.douyin.R;
-import io.bcyl.douyin.Utils.VideoItem;
 
 public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.UserVideoHolder> {
 
     @NonNull
-    private final List<VideoItem> myVideoItems;
+    private final List<VideoInfo> videoInfoList;
 
-    public UserVideoAdapter(@NonNull List<VideoItem> myVideoItems) {
-        this.myVideoItems = myVideoItems;
+    public UserVideoAdapter(@NonNull List<VideoInfo> myVideoInfos) {
+        this.videoInfoList = myVideoInfos;
     }
 
     static class UserVideoHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -51,15 +50,15 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
     @Override
     public void onBindViewHolder(@NonNull UserVideoHolder holder, int position) {
-        VideoItem item = myVideoItems.get(position);
-        holder.videoTitleView.setText(item.getTitle());
+        VideoInfo item = videoInfoList.get(position);
+        //holder.videoTitleView.setText(item.get);
         // TODO init Video
         //holder.videoView.setVideoPath(item.getVideoUrl()); 当前没有video
     }
 
     @Override
     public int getItemCount() {
-        return myVideoItems.size();
+        return videoInfoList.size();
     }
 
 

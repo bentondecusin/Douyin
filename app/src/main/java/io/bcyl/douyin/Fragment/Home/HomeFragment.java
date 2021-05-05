@@ -14,24 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.bcyl.douyin.R;
-import io.bcyl.douyin.Utils.VideoItem;
+import io.bcyl.douyin.Utils.Network;
 import io.bcyl.douyin.Model.VideoInfo;
-import io.bcyl.douyin.Model.VideoInfoList;
 
 import static android.os.Looper.getMainLooper;
 
@@ -53,7 +43,6 @@ public class HomeFragment extends Fragment {
     /**
      * For now we are using sentinel data
      */
-    ArrayList<VideoItem> videoList = new ArrayList<VideoItem>();
     RecyclerView mRecyclerView;
     VideoAdapter mAdapter;
     public HomeFragment() {
@@ -71,7 +60,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getData(null);
+        getData();
 
         /*
          * For now we are using sentinel data
@@ -182,16 +171,13 @@ public class HomeFragment extends Fragment {
         Log.i(TAG,"On stop");
         pauseCurrentVideo();
     }
-    public List<VideoInfo> dataGetFromRemote() {
-        return dataGetFromRemote(null);
-    }
 
-    private void getData(String usrId){
+    private void getData(){
         new Thread(new Runnable() {
             @Override
             public void run() {
 //                List<VideoInfo>
-                vl = dataGetFromRemote(usrId);
+                vl = Network.dataGetFromRemote(null);
                 if (vl != null && !vl.isEmpty()){
                     new Handler(getMainLooper()).post(new Runnable() {
                         @Override
@@ -203,34 +189,5 @@ public class HomeFragment extends Fragment {
             }
         }).start();
     }
-
-    public List<VideoInfo> dataGetFromRemote(String usrId){
-        final String BASE_URL = getString(R.string.BDurl) + "/video?student_id=" + getString(R.string.identifier);
-        String urlStr = BASE_URL;
-        if (usrId != null) urlStr = BASE_URL + usrId;
-        List<VideoInfo> vidList = null;
-        try{
-            URL url = new URL(urlStr);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(2000);
-            conn.setRequestMethod("GET");
-            int status = conn.getResponseCode();
-            if (status == 200){
-                InputStream in = conn.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
-                VideoInfoList vl = new Gson().fromJson(reader, new TypeToken<VideoInfoList>(){
-                }.getType());
-                vidList = vl.feeds;
-                reader.close();
-                in.close();
-            }
-            else throw new Exception(Integer.toString(status));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return vidList;
-    }
-
-
 
 }

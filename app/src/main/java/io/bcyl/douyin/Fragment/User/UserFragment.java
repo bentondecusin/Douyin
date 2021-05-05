@@ -22,12 +22,13 @@ import java.util.List;
 
 import io.bcyl.douyin.HomeActivity;
 import io.bcyl.douyin.LoginActivity;
+import io.bcyl.douyin.Model.VideoInfo;
 import io.bcyl.douyin.R;
-import io.bcyl.douyin.Utils.VideoItem;
+import io.bcyl.douyin.Utils.Network;
 
 public class UserFragment extends Fragment {
     public static final int LOGIN_CODE = 1;
-    private final List<VideoItem> itemList = new ArrayList<>();
+    private List<VideoInfo> itemList = new ArrayList<>();
     private ImageView headImageView;
     private RecyclerView myVideoView;
     private TextView userNameView;
@@ -76,7 +77,7 @@ public class UserFragment extends Fragment {
         setLoginButton(logged);
 
         if (logged) {
-            String curUserName=preferences.getString("userName", getString(R.string.not_login));
+            String curUserName = preferences.getString("userName", getString(R.string.not_login));
             userNameView.setText(curUserName);
             initData(curUserName);
         }
@@ -86,11 +87,7 @@ public class UserFragment extends Fragment {
     }
 
     private void initData(String userName) {
-        for (int i = 0; i < 20; i++) {
-            VideoItem item = new VideoItem("Url" + i, "myText" + i, "user" + i);
-            itemList.add(item);
-        }
-        myVideoView.setAdapter(new UserVideoAdapter(itemList));
+        itemList = Network.dataGetFromRemote(userName);
     }
 
 
@@ -116,7 +113,7 @@ public class UserFragment extends Fragment {
         }
     }
 
-    private void reset(){
+    private void reset() {
         setLoginButton(false);
         userNameView.setText(getString(R.string.not_login));
         headImageView.setImageResource(R.mipmap.tiktok_logo);
