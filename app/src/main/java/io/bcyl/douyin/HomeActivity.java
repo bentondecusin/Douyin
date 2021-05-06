@@ -3,6 +3,7 @@ package io.bcyl.douyin;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,6 +15,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
+
+import java.util.Stack;
 
 import io.bcyl.douyin.Fragment.Add.AddFragment;
 import io.bcyl.douyin.Fragment.Home.HomeFragment;
@@ -28,8 +31,11 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private BottomNavigationView mBottomNavigationView;
     private ViewPager viewPager;
 
+    private Stack<Integer> stack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        stack = new Stack<Integer>();
+        stack.push(0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         SharedPreferences preferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
@@ -77,9 +83,28 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Log.i( "onBackPressed: ", stack.toString());
+        int i = 0;
+        if (!stack.isEmpty()){
+            i = stack.pop();
+        }
+        if(!stack.isEmpty()){
+            viewPager.setCurrentItem(stack.peek());
+        }
+        else stack.push(i);
+
+    }
+
     @Override
     public void onPageSelected(int position) {
+        Log.i( "onPageSelected: ", stack.toString());
         mBottomNavigationView.getMenu().getItem(position).setChecked(true);
+        if (stack.isEmpty()) stack.push(position);
+        else if (!stack.isEmpty() && stack.peek() != position)  stack.push(position);
+
     }
 
     @Override

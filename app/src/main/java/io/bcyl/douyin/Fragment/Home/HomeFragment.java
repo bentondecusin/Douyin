@@ -172,12 +172,12 @@ public class HomeFragment extends Fragment {
         pauseCurrentVideo();
     }
 
-    private void getData(){
+    private void getData(String usrName){
         new Thread(new Runnable() {
             @Override
             public void run() {
 //                List<VideoInfo>
-                vl = Network.dataGetFromRemote(null);
+                vl = Network.dataGetFromRemote(usrName);
                 if (vl != null && !vl.isEmpty()){
                     new Handler(getMainLooper()).post(new Runnable() {
                         @Override
@@ -189,5 +189,11 @@ public class HomeFragment extends Fragment {
             }
         }).start();
     }
+
+    private void getData(){
+        getData(null);
+    }
+
+
 
 }
