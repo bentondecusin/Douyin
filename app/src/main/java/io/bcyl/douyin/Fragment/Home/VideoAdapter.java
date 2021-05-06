@@ -45,7 +45,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 //        videoViewHolder.usrName.setText(videoItemList.get(i).getUserName());
 //        videoViewHolder.vidTitle.setText(videoItemList.get(i).getTitle());
         String vidTitleStr = videoInfoList.get(i).getExtraValue();
-        if (vidTitleStr.split(",").length < 1)
+        if (vidTitleStr.split("$%^").length < 1)
             vidTitleStr = videoInfoList.get(i).getExtraValue().split(",")[1];
         videoViewHolder.url = videoInfoList.get(i).getVideoUrl();
         videoViewHolder.usrName.setText(videoInfoList.get(i).getUserName());
