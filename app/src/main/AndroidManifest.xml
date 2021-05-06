@@ -2,12 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.bcyl.douyin">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_tiktok_logo"
@@ -15,8 +9,9 @@
         android:roundIcon="@drawable/ic_tiktok_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Douyin">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".UploadVideoActivity"/>
+        <activity android:name=".EditVideoActivity"></activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".UploadVideoActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,5 +23,11 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_main" />
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -35,30 +35,30 @@ import static io.bcyl.douyin.Constants.token;
 
 public class UploadVideoActivity extends AppCompatActivity {
 
+    public static UploadVideoActivity uploadactivity;
+
     private String mp4Path;
     private VideoView videoView;
     private Button btConfirm;
     private Button btCancel;
 
-    private UploadVideoAPI api;
-    private Bitmap bitmap;
-    private File video;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_video);
+        uploadactivity = this;
         Intent intent = getIntent();
         mp4Path = intent.getStringExtra("mp4Path");
         videoView = findViewById(R.id.Edit_view);
         btConfirm = findViewById(R.id.bt_confirm);
         btCancel = findViewById(R.id.bt_cancel);
-        initNetwork();
 
         btConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Upload();
+                Intent newIntent = new Intent(UploadVideoActivity.this, EditVideoActivity.class);
+                newIntent.putExtra("videoPath", mp4Path);
+                startActivity(newIntent);
             }
         });
 
@@ -86,80 +86,7 @@ public class UploadVideoActivity extends AppCompatActivity {
         });
     }
 
-    private void initNetwork() {
-        final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
-        api = retrofit.create(UploadVideoAPI.class);
-    }
-
-    private void Upload() {
-        bitmap = getVideoThumb();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        byte[] coverImageData= out.toByteArray();
-
-        video = new File(mp4Path);
-
-        if (coverImageData == null || coverImageData.length == 0) {
-            Toast.makeText(this, "封面不存在", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        MultipartBody.Part cover_image_part = MultipartBody.Part.createFormData(
-                "image",
-                "cover.png",
-                RequestBody.create(MediaType.parse("multipart/form-data"), coverImageData)
-        );
-
-        MultipartBody.Part video_part = MultipartBody.Part.createFormData(
-                "video",
-                "video.mp4",
-                RequestBody.create(MediaType.parse("multipart/form-data"), video)
-        );
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Call<UploadResponse> call = api.uploadVideo(
-                        IDENTIFIER + STUDENT_ID,
-                        USER_NAME,
-                        "",
-                        cover_image_part,
-                        video_part,
-                        token
-                );
-                Log.e("My", "Test");
-                try {
-                    Response<UploadResponse> response = call.execute();
-
-
-                    if (response.isSuccessful() && response.body().success) {
-                        Log.e("My", "Success!");
-                        UploadVideoActivity.this.finish();
-                    }
-                    else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(UploadVideoActivity.this, "上传失败!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
-
     private void Cancel() {
         UploadVideoActivity.this.finish();
-    }
-
-    private Bitmap getVideoThumb() {
-        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
-        mediaMetadataRetriever.setDataSource(mp4Path);
-        return mediaMetadataRetriever.getFrameAtTime();
     }
 }
