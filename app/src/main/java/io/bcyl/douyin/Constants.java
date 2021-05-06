@@ -6,5 +6,6 @@ public class Constants {
 
     public static final String STUDENT_ID = "518021910859";
     public static final String USER_NAME = "李玉豪";
+    public static final String IDENTIFIER = "";
 
 }

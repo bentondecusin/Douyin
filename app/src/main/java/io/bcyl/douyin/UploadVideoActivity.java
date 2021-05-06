@@ -28,6 +28,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static io.bcyl.douyin.Constants.BASE_URL;
+import static io.bcyl.douyin.Constants.IDENTIFIER;
 import static io.bcyl.douyin.Constants.STUDENT_ID;
 import static io.bcyl.douyin.Constants.USER_NAME;
 import static io.bcyl.douyin.Constants.token;
@@ -120,7 +121,7 @@ public class UploadVideoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Call<UploadResponse> call = api.uploadVideo(
-                        STUDENT_ID,
+                        IDENTIFIER + STUDENT_ID,
                         USER_NAME,
                         "",
                         cover_image_part,
