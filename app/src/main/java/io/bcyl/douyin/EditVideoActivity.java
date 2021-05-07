@@ -35,6 +35,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static io.bcyl.douyin.Utils.Constants.BASE_URL;
+import static io.bcyl.douyin.Utils.Constants.IDENTIFIER;
 import static io.bcyl.douyin.Utils.Constants.STUDENT_ID;
 import static io.bcyl.douyin.Utils.Constants.USER_NAME;
 import static io.bcyl.douyin.Utils.Constants.token;
@@ -173,9 +174,9 @@ public class EditVideoActivity extends AppCompatActivity {
             public void run() {
                 SharedPreferences sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
                 Call<UploadResponse> call = api.uploadVideo(
+                        IDENTIFIER,
                         sharedPreferences.getString( "userName", "Guest"),
-                        USER_NAME,
-                        Constants.DELIM +comment.getText(),
+                         Constants.DELIM +comment.getText(),
                         cover_image_part,
                         video_part,
                         token

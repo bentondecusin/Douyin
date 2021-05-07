@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.Constants;
@@ -75,21 +76,25 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
         holder.getPlayer().play();
         holder.getVidTitle().setAlpha(1f);
         holder.getUsrName().setAlpha(1f);
+        showAndHideText(holder);
+
+    }
+
+    public void showAndHideText(VideoViewHolder holder){
+        holder.getVidTitle().setAlpha(1f);
+        holder.getUsrName().setAlpha(1f);
         AnimatorSet as = new AnimatorSet();
         as.playTogether(
                 ObjectAnimator.ofFloat(holder.getVidTitle(), "alpha", 1f,0.1f).setDuration(2000),
                 ObjectAnimator.ofFloat(holder.getUsrName(), "alpha", 1f,0.1f).setDuration(2000));
-        as.start();
-
-//        holder.getVidTitle().postDelayed(new Runnable(){
-//            @Override
-//            public void run()
-//            {
-//                holder.getVidTitle().setVisibility(View.GONE);
-//            }
-//        }, 1000);
+        holder.getItemView().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        as.start();
+                    }
+                }, 1000L);
     }
-
     @Override
     public void onViewDetachedFromWindow(@NonNull VideoViewHolder holder) {
         super.onViewDetachedFromWindow(holder);

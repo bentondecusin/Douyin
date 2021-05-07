@@ -1,5 +1,7 @@
 package io.bcyl.douyin.Fragment.Home;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
@@ -27,14 +29,26 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
     public String url;
     public Context context;
     private VideoAdapter videoAdapter;
+    private View itemView;
     public VideoViewHolder(@NonNull View itemView) {
         super(itemView);
+        this.itemView = itemView;
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAndHideText();
+            }
+        });
         context = itemView.getContext();
         usrName   = itemView.findViewById(R.id.usrName);
         vidTitle  = itemView.findViewById(R.id.vidTitle);
         playerView = itemView.findViewById(R.id.video_view);
     }
 
+
+    public View getItemView() {
+        return itemView;
+    }
 
     public void initializePlayer() {
         player = new SimpleExoPlayer.Builder(context).build();
@@ -49,6 +63,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         playerView.setShowFastForwardButton(false);
         playerView.setShowRewindButton(false);
         playerView.setControllerAutoShow(false);
+        playerView.setControllerShowTimeoutMs(1000);
         playerView.hideController();
         player.addListener(new Player.EventListener() {
             @Override
@@ -63,6 +78,21 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         player.prepare();
     }
 
+    public void showAndHideText( ){
+        getVidTitle().setAlpha(1f);
+        getUsrName().setAlpha(1f);
+        AnimatorSet as = new AnimatorSet();
+        as.playTogether(
+                ObjectAnimator.ofFloat(getVidTitle(), "alpha", 1f,0.1f).setDuration(2000),
+                ObjectAnimator.ofFloat(getUsrName(), "alpha", 1f,0.1f).setDuration(2000));
+        getItemView().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        as.start();
+                    }
+                }, 1000L);
+    }
 
     public void releasePlayer() {
         if (player != null) {
@@ -87,6 +117,7 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+
     public SimpleExoPlayer getPlayer(){
         return this.player;
     }
