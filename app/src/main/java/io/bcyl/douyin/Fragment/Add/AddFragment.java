@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +23,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.io.File;
@@ -89,6 +91,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mRecordButton = view.findViewById(R.id.bt_record);
 
         mHolder = mSurfaceView.getHolder();
+
         requestPermission();
 
         return view;
@@ -114,6 +117,23 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
         initCamera();
+        mSurfaceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCamera != null) {
+                    mCamera.autoFocus(new Camera.AutoFocusCallback(){
+                        @Override
+                        public void onAutoFocus(boolean success, Camera camera) {
+                            if (success) {
+                                Log.e("My", "Focus Success!");
+                            } else {
+                                mCamera.autoFocus(this);
+                            }
+                        }
+                    });
+                }
+            }
+        });
         mHolder.addCallback(this);
     }
 
@@ -124,6 +144,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         parameters.set("orientation", "portrait");
         parameters.set("rotation", 90);
+        parameters.setRecordingHint(true);
         mCamera.setParameters(parameters);
         mCamera.setDisplayOrientation(90);
     }

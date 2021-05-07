@@ -21,7 +21,8 @@
         <ImageButton
             android:id="@+id/cover_img"
             android:layout_width="108dp"
-            android:layout_height="198dp"/>
+            android:layout_height="198dp"
+            android:scaleType="centerInside"/>
     </LinearLayout>
 
     <LinearLayout
