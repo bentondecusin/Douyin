@@ -7,12 +7,13 @@
     android:layout_centerInParent="true"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+
     >
   <!--    android:tintMode="screen"-->
   <!--    android:tint="@color/black"-->
   <group android:scaleX="1"
       android:scaleY="1"
-      android:translateX="-123"
+      android:translateX="-135"
       android:translateY="-65"
       >
   <path
