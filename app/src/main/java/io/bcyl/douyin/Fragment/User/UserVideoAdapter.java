@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
@@ -34,10 +35,12 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
     static class UserVideoHolder extends RecyclerView.ViewHolder {
         private final ImageView videoPreview;
+        private TextView videoLengthView;
         public VideoInfo videoInfo=null;
 
         public UserVideoHolder(@NonNull View itemView,Context context) {
             super(itemView);
+            videoLengthView=(TextView)itemView.findViewById(R.id.video_length);
             videoPreview = (ImageView) itemView.findViewById(R.id.item_preview);
         }
     }
@@ -54,8 +57,8 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         VideoInfo item = videoInfoList.get(position);
         holder.videoInfo=item;
         String userName=item.getUserName();
+        int video_length= Integer.parseInt(item.getExtraValue().split(",")[0]);
         String title=item.getExtraValue().split(",")[1];
-        String comment=item.getExtraValue().split(",")[2];
         String imgUrl=item.getImageUrl();
         String videoUrl=item.getVideoUrl();
 
@@ -63,6 +66,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         Glide.with(context)
                 .load(imgUrl)
                 .into(holder.videoPreview);
+        holder.videoLengthView.setText(transferTime(800));// TODO
 
         holder.videoPreview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +75,6 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
                 intent.putExtra("url",videoUrl);
                 intent.putExtra("userName",userName);
                 intent.putExtra("title",title);
-                intent.putExtra("comment",comment);
                 context.startActivity(intent);
             }
         });
@@ -82,4 +85,10 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         return videoInfoList.size();
     }
 
+
+    private String transferTime(int length){
+        int minutes=length/60;
+        int seconds=length%60;
+        return String.valueOf(minutes)+":"+String.valueOf(seconds);
+    }
 }

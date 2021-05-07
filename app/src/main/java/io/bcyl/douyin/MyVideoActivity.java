@@ -23,12 +23,9 @@ import io.bcyl.douyin.Fragment.Home.VideoViewHolder;
 import static android.os.Looper.getMainLooper;
 
 public class MyVideoActivity extends AppCompatActivity {
-    private String title,comment,url,userName;
+    private String url;
     private PlayerView playerView;
-    private TextView userNameView,videoTitleView;
     private SimpleExoPlayer player;
-    private int currentWindow = 0;
-    private long playbackPosition = 0;
 
     public MyVideoActivity() {
     }
@@ -40,19 +37,20 @@ public class MyVideoActivity extends AppCompatActivity {
 
         Log.d("MyVideoAc","ok");
         Intent intent=getIntent();
-        title=intent.getStringExtra("title");
-        comment=intent.getStringExtra("comment");
+        String title = intent.getStringExtra("title");
         url=intent.getStringExtra("url");
-        userName=intent.getStringExtra("userName");
+        String userName = intent.getStringExtra("userName");
 
         playerView = (PlayerView)findViewById(R.id.video_view);
-
-        userNameView=(TextView)findViewById(R.id.usrName);
+        TextView userNameView = (TextView) findViewById(R.id.usrName);
         userNameView.setText(userName);
 
-        videoTitleView=(TextView)findViewById(R.id.vidTitle);
+        TextView videoTitleView = (TextView) findViewById(R.id.vidTitle);
         videoTitleView.setText(title);
+
         initializePlayer();
+
+
 
         new Handler(getMainLooper()).postDelayed(new Runnable() {
             @Override
@@ -95,6 +93,8 @@ public class MyVideoActivity extends AppCompatActivity {
                 .setMimeType(MimeTypes.APPLICATION_MP4)
                 .build();
         player.setMediaItem(mediaItem);
+        int currentWindow = 0;
+        long playbackPosition = 0;
         player.seekTo(currentWindow, playbackPosition);
         playerView.setShowPreviousButton(false);
         playerView.setShowNextButton(false);
