@@ -15,7 +15,7 @@ public class Network {
 
     public static List<VideoInfo> dataGetFromRemote(String usrId){
 
-        final String BASE_URL = "https://api-sjtu-camp-2021.bytedance.com/homework/invoke/video?student_id=t0" + Constants.IDENTIFIER;
+        final String BASE_URL = "https://api-sjtu-camp-2021.bytedance.com/homework/invoke/video?student_id=" + Constants.IDENTIFIER;
         String urlStr = BASE_URL;
         if (usrId != null) urlStr = BASE_URL + usrId;
         List<VideoInfo> vidList = null;
