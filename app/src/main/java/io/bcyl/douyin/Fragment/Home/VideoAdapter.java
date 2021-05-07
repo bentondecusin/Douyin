@@ -1,6 +1,7 @@
 package io.bcyl.douyin.Fragment.Home;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.bcyl.douyin.R;
+import io.bcyl.douyin.Utils.Constants;
 import io.bcyl.douyin.Utils.VideoInfo;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
@@ -45,8 +47,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 //        videoViewHolder.usrName.setText(videoItemList.get(i).getUserName());
 //        videoViewHolder.vidTitle.setText(videoItemList.get(i).getTitle());
         String vidTitleStr = videoInfoList.get(i).getExtraValue();
-        if (vidTitleStr.split("$%^").length < 1)
-            vidTitleStr = videoInfoList.get(i).getExtraValue().split(",")[1];
+        Log.i("videoInfoList.get(i).getExtraValue()", vidTitleStr);
+        if (vidTitleStr.split(Constants.DELIM).length > 0)
+            vidTitleStr = videoInfoList.get(i).getExtraValue().split(Constants.DELIM)[1];
+        else vidTitleStr = "";
         videoViewHolder.url = videoInfoList.get(i).getVideoUrl();
         videoViewHolder.usrName.setText(videoInfoList.get(i).getUserName());
         videoViewHolder.vidTitle.setText(vidTitleStr);

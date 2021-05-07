@@ -4,7 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.bcyl.douyin.Utils.Constants;
 import io.bcyl.douyin.Utils.UploadResponse;
 import io.bcyl.douyin.Utils.Util;
 import okhttp3.MediaType;
@@ -168,15 +171,16 @@ public class EditVideoActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                SharedPreferences sharedPreferences = getSharedPreferences("user_info", Context.MODE_PRIVATE);
                 Call<UploadResponse> call = api.uploadVideo(
-                        STUDENT_ID,
+                        sharedPreferences.getString( "userName", "Guest"),
                         USER_NAME,
-                        comment.toString(),
+                        Constants.DELIM +comment.getText(),
                         cover_image_part,
                         video_part,
                         token
                 );
-                Log.e("My", "Test");
+                Log.i("My", STUDENT_ID + ";" + USER_NAME + ";" + comment.toString());
                 try {
                     Response<UploadResponse> response = call.execute();
 
