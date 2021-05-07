@@ -57,8 +57,14 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         VideoInfo item = videoInfoList.get(position);
         holder.videoInfo=item;
         String userName=item.getUserName();
-        int video_length= Integer.parseInt(item.getExtraValue().split(DELIM)[0]);
-        String title=item.getExtraValue().split(DELIM)[1];
+        int video_length = -1;
+        try{
+            video_length = Integer.parseInt(item.getExtraValue().split(DELIM)[0]);
+        }catch (Exception e){
+            Log.i("Video length/NumberFormatException", "Video does not have length");
+        }
+
+        String title = item.getExtraValue().split(DELIM).length > 1 ? item.getExtraValue().split(DELIM)[1] : "";
         String imgUrl=item.getImageUrl();
         String videoUrl=item.getVideoUrl();
 
@@ -66,7 +72,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         Glide.with(context)
                 .load(imgUrl)
                 .into(holder.videoPreview);
-        holder.videoLengthView.setText(transferTime(800));// TODO
+        holder.videoLengthView.setText( video_length == -1 ? "" : transferTime(video_length));// TODO
 
         holder.videoPreview.setOnClickListener(v -> {
             Intent intent=new Intent(context, MyVideoActivity.class);
