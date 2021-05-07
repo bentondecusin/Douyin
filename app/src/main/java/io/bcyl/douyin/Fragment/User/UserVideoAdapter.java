@@ -34,13 +34,11 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
     static class UserVideoHolder extends RecyclerView.ViewHolder {
         private final ImageView videoPreview;
-        private final Context context;
         public VideoInfo videoInfo=null;
 
         public UserVideoHolder(@NonNull View itemView,Context context) {
             super(itemView);
             videoPreview = (ImageView) itemView.findViewById(R.id.item_preview);
-            this.context=context;
         }
     }
 
@@ -55,7 +53,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
     public void onBindViewHolder(@NonNull UserVideoHolder holder, int position) {
         VideoInfo item = videoInfoList.get(position);
         holder.videoInfo=item;
-        String userName=item.getExtraValue().split(",")[0];
+        String userName=item.getUserName();
         String title=item.getExtraValue().split(",")[1];
         String comment=item.getExtraValue().split(",")[2];
         String imgUrl=item.getImageUrl();
@@ -69,7 +67,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         holder.videoPreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, HomeFragment.class);
+                Intent intent=new Intent(context, MyVideoActivity.class);
                 intent.putExtra("url",videoUrl);
                 intent.putExtra("userName",userName);
                 intent.putExtra("title",title);

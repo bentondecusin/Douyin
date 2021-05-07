@@ -1,6 +1,8 @@
 package io.bcyl.douyin.Fragment.User;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -136,10 +138,26 @@ public class UserFragment extends Fragment {
     }
 
     private void reset() {
-        setLoginButton(false);
-        userNameView.setText(getString(R.string.not_login));
-        headImageView.setImageResource(R.mipmap.tiktok_logo);
-        itemList.clear();
-        myVideoView.setAdapter(new UserVideoAdapter(itemList,getContext()));
+        AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
+        dialog.setTitle("确定要退出登录吗？");
+        dialog.setCancelable(true);
+
+        dialog.setPositiveButton("OK", new DialogInterface. OnClickListener() {//确定按钮的点击事件
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setLoginButton(false);
+                userNameView.setText(getString(R.string.not_login));
+                headImageView.setImageResource(R.mipmap.tiktok_logo);
+                itemList.clear();
+                myVideoView.setAdapter(new UserVideoAdapter(itemList,getContext()));
+            }
+        });
+        dialog.setNegativeButton("Cancel", new DialogInterface. OnClickListener() {//取消按钮的点击事件
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        dialog.show();
+
     }
 }
