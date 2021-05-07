@@ -1,4 +1,4 @@
-package io.bcyl.douyin;
+package io.bcyl.douyin.Fragment.User;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import io.bcyl.douyin.Fragment.User.UserFragment;
+import io.bcyl.douyin.HomeActivity;
+import io.bcyl.douyin.R;
 
 public class LoginActivity extends AppCompatActivity {
 

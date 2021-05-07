@@ -21,7 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import io.bcyl.douyin.Model.UploadResponse;
+import io.bcyl.douyin.Utils.UploadResponse;
+import io.bcyl.douyin.Utils.Util;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -30,10 +31,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static io.bcyl.douyin.Constants.BASE_URL;
-import static io.bcyl.douyin.Constants.STUDENT_ID;
-import static io.bcyl.douyin.Constants.USER_NAME;
-import static io.bcyl.douyin.Constants.token;
+import static io.bcyl.douyin.Utils.Constants.BASE_URL;
+import static io.bcyl.douyin.Utils.Constants.STUDENT_ID;
+import static io.bcyl.douyin.Utils.Constants.USER_NAME;
+import static io.bcyl.douyin.Utils.Constants.token;
 
 public class EditVideoActivity extends AppCompatActivity {
     private static final String TAG = "Douyin";

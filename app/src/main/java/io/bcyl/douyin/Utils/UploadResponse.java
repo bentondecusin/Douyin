@@ -1,4 +1,4 @@
-package io.bcyl.douyin.Model;
+package io.bcyl.douyin.Utils;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -21,7 +21,7 @@ import java.util.List;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.Network;
-import io.bcyl.douyin.Model.VideoInfo;
+import io.bcyl.douyin.Utils.VideoInfo;
 
 import static android.os.Looper.getMainLooper;
 

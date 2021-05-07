@@ -11,16 +11,11 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import io.bcyl.douyin.Constants;
-import io.bcyl.douyin.R;
-import io.bcyl.douyin.Model.VideoInfo;
-import io.bcyl.douyin.Model.VideoInfoList;
-
 public class Network {
 
     public static List<VideoInfo> dataGetFromRemote(String usrId){
 
-        final String BASE_URL = "https://api-sjtu-camp-2021.bytedance.com/homework/invoke/video?student_id=" + Constants.IDENTIFIER;
+        final String BASE_URL = "https://api-sjtu-camp-2021.bytedance.com/homework/invoke/video?student_id=t0" + Constants.IDENTIFIER;
         String urlStr = BASE_URL;
         if (usrId != null) urlStr = BASE_URL + usrId;
         List<VideoInfo> vidList = null;

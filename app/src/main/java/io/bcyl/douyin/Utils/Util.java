@@ -1,4 +1,4 @@
-package io.bcyl.douyin;
+package io.bcyl.douyin.Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

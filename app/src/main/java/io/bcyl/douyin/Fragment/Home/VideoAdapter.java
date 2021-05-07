@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.bcyl.douyin.R;
-import io.bcyl.douyin.Model.VideoInfo;
+import io.bcyl.douyin.Utils.VideoInfo;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 //    List<VideoItem> videoItemList = new ArrayList<VideoItem>();

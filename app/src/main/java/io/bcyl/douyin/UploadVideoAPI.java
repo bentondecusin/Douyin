@@ -1,7 +1,7 @@
 package io.bcyl.douyin;
 
 
-import io.bcyl.douyin.Model.UploadResponse;
+import io.bcyl.douyin.Utils.UploadResponse;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Header;

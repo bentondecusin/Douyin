@@ -1,4 +1,4 @@
-package io.bcyl.douyin;
+package io.bcyl.douyin.Utils;
 
 public class Constants {
     public static final String BASE_URL = "https://api-sjtu-camp-2021.bytedance.com/homework/invoke/";

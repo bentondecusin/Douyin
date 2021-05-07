@@ -3,35 +3,13 @@ package io.bcyl.douyin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import android.widget.VideoView;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-
-import io.bcyl.douyin.Model.UploadResponse;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static io.bcyl.douyin.Constants.BASE_URL;
-import static io.bcyl.douyin.Constants.IDENTIFIER;
-import static io.bcyl.douyin.Constants.STUDENT_ID;
-import static io.bcyl.douyin.Constants.USER_NAME;
-import static io.bcyl.douyin.Constants.token;
 
 public class UploadVideoActivity extends AppCompatActivity {
 

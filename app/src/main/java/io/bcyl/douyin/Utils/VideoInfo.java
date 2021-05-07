@@ -1,9 +1,8 @@
-package io.bcyl.douyin.Model;
+package io.bcyl.douyin.Utils;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
-import java.util.List;
 
 public class VideoInfo {
     @SerializedName("_id")
