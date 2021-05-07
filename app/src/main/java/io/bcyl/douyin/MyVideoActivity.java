@@ -103,6 +103,15 @@ public class MyVideoActivity extends AppCompatActivity {
         playerView.setControllerAutoShow(false);
         playerView.hideController();
         player.prepare();
+
+        player.addListener(new Player.EventListener() {
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+                if (playbackState == Player.STATE_ENDED) {
+                    finish();
+                }
+            }
+        });
     }
     public SimpleExoPlayer getPlayer(){
         return this.player;
