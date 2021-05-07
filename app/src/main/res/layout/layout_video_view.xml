@@ -1,65 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black" />
+
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
-        app:played_color="@color/exo_gray"
-        >
+        app:auto_show="true"
+        app:controller_layout_id="@layout/customized_controller_view">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent">-->
 
-            <TextView
-                android:id="@+id/at"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_alignBottom="@id/vidTitle"
-                android:layout_marginBottom="30dp"
-                android:background="@color/black"
+        <!--            <TextView-->
+        <!--                android:id="@+id/at"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="35dp"-->
+        <!--                android:layout_alignBottom="@id/vidTitle"-->
+        <!--                android:layout_marginBottom="30dp"-->
+        <!--                android:background="@color/white"-->
+        <!--                android:text="@string/at"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="25dp"-->
+        <!--                android:textStyle="bold" />-->
 
-                android:text="@string/at"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="25dp" />
+        <!--            <TextView-->
+        <!--                android:id="@+id/usrName"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="35dp"-->
+        <!--                android:layout_toEndOf="@+id/at"-->
+        <!--                android:layout_alignBottom="@id/vidTitle"-->
+        <!--                android:layout_marginBottom="30dp"-->
+        <!--                android:background="#ffa31a"-->
+        <!--                android:paddingStart="5dp"-->
+        <!--                android:paddingEnd="5dp"-->
+        <!--                android:shadowRadius="5"-->
+        <!--                android:text="usrName"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textSize="25sp"-->
+        <!--                android:textStyle="bold" />-->
 
-            <TextView
-                android:id="@+id/usrName"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_above="@+id/vidTitle"
-
-                android:layout_toEndOf="@+id/at"
-                android:background="@color/black"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:shadowRadius="5"
-                android:text="usrName"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="25sp" />
-
-            <TextView
-                android:id="@+id/vidTitle"
-                android:layout_width="match_parent"
-                android:layout_height="30sp"
-                android:paddingStart="20dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/black"
-                android:text="title"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </RelativeLayout>
+        <!--            <TextView-->
+        <!--                android:id="@+id/vidTitle"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="30dp"-->
+        <!--                android:layout_alignParentBottom="true"-->
+        <!--                android:layout_marginBottom="0dp"-->
+        <!--                android:background="@color/black"-->
+        <!--                android:paddingStart="20dp"-->
+        <!--                android:text="title"-->
+        <!--                android:textColor="@color/white"-->
+        <!--                android:textSize="18sp" />-->
+        <!--        </RelativeLayout>-->
 
     </com.google.android.exoplayer2.ui.PlayerView>
 
+    <TextView
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        android:text="@string/loading"
+        android:textAlignment="center" />
 
-</LinearLayout>
+
+</FrameLayout>

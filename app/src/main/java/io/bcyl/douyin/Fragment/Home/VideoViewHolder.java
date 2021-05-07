@@ -1,7 +1,5 @@
 package io.bcyl.douyin.Fragment.Home;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
@@ -21,11 +19,13 @@ import io.bcyl.douyin.R;
 public class VideoViewHolder extends RecyclerView.ViewHolder{
     private static final String TAG = HomeFragment.class.getName();
     private final PlayerView playerView;
+    private final TextView loadingView;
     private SimpleExoPlayer player;
     private int currentWindow = 0;
     private long playbackPosition = 0;
     public TextView usrName;
     public TextView vidTitle;
+    public TextView at;
     public String url;
     public Context context;
     private VideoAdapter videoAdapter;
@@ -33,16 +33,13 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
     public VideoViewHolder(@NonNull View itemView) {
         super(itemView);
         this.itemView = itemView;
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAndHideText();
-            }
-        });
         context = itemView.getContext();
         usrName   = itemView.findViewById(R.id.usrName);
         vidTitle  = itemView.findViewById(R.id.vidTitle);
         playerView = itemView.findViewById(R.id.video_view);
+        at = itemView.findViewById(R.id.at);
+        loadingView = itemView.findViewById(R.id.loading);
+
     }
 
 
@@ -62,36 +59,33 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         playerView.setShowNextButton(false);
         playerView.setShowFastForwardButton(false);
         playerView.setShowRewindButton(false);
-        playerView.setControllerAutoShow(false);
-        playerView.setControllerShowTimeoutMs(1000);
-        playerView.hideController();
+        playerView.setControllerAutoShow(true);
+        playerView.showController();
         player.addListener(new Player.EventListener() {
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                if (playbackState == Player.STATE_ENDED) {
+                if (playbackState == Player.STATE_IDLE){
+                    loadingView.setText("视频暂时无法播放");
+                }
+                else if (playbackState == Player.STATE_BUFFERING){
+                    playerView.setControllerAutoShow(true);
+                    loadingView.setAlpha(1);
+                }
+                else if (playbackState == Player.STATE_READY) {
+                    playerView.showController();
+                    playerView.setControllerShowTimeoutMs(1000);
+                    loadingView.setAlpha(0);
+                }
+                else if (playbackState == Player.STATE_ENDED) {
                     int idx = getAdapterPosition();
                     if (videoAdapter.getItemCount() > idx)
                         videoAdapter.getRecyclerView().smoothScrollToPosition(idx+1);
                 }
+
             }
         });
         player.prepare();
-    }
 
-    public void showAndHideText( ){
-        getVidTitle().setAlpha(1f);
-        getUsrName().setAlpha(1f);
-        AnimatorSet as = new AnimatorSet();
-        as.playTogether(
-                ObjectAnimator.ofFloat(getVidTitle(), "alpha", 1f,0.1f).setDuration(2000),
-                ObjectAnimator.ofFloat(getUsrName(), "alpha", 1f,0.1f).setDuration(2000));
-        getItemView().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        as.start();
-                    }
-                }, 1000L);
     }
 
     public void releasePlayer() {
@@ -118,6 +112,9 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
+    public PlayerView getPlayerView() {
+        return this.playerView;
+    }
     public SimpleExoPlayer getPlayer(){
         return this.player;
     }

@@ -153,9 +153,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onResume() {
+        getData();
         super.onResume();
         Log.i(TAG,"On resume");
-        resumeCurrentVideo();
+//        resumeCurrentVideo();
     }
 
     @Override

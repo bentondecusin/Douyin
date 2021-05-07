@@ -28,6 +28,8 @@
     <string name="vidTitle">视频标题</string>
     <string name="identifier"></string>
     <string name="BDurl">https://api-sjtu-camp-2021.bytedance.com/homework/invoke</string>
+    <string name="loading">加载中...</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_info">编辑资料</string>

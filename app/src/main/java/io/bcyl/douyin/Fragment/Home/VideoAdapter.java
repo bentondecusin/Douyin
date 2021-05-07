@@ -74,27 +74,10 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
     public void onViewAttachedToWindow(@NonNull VideoViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         holder.getPlayer().play();
-        holder.getVidTitle().setAlpha(1f);
-        holder.getUsrName().setAlpha(1f);
-        showAndHideText(holder);
-
+        holder.getPlayerView().showController();
     }
 
-    public void showAndHideText(VideoViewHolder holder){
-        holder.getVidTitle().setAlpha(1f);
-        holder.getUsrName().setAlpha(1f);
-        AnimatorSet as = new AnimatorSet();
-        as.playTogether(
-                ObjectAnimator.ofFloat(holder.getVidTitle(), "alpha", 1f,0.1f).setDuration(2000),
-                ObjectAnimator.ofFloat(holder.getUsrName(), "alpha", 1f,0.1f).setDuration(2000));
-        holder.getItemView().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        as.start();
-                    }
-                }, 1000L);
-    }
+
     @Override
     public void onViewDetachedFromWindow(@NonNull VideoViewHolder holder) {
         super.onViewDetachedFromWindow(holder);

@@ -20,6 +20,8 @@ import io.bcyl.douyin.MyVideoActivity;
 import io.bcyl.douyin.Utils.VideoInfo;
 import io.bcyl.douyin.R;
 
+import static io.bcyl.douyin.Utils.Constants.DELIM;
+
 public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.UserVideoHolder> {
 
     @NonNull
@@ -55,8 +57,8 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         VideoInfo item = videoInfoList.get(position);
         holder.videoInfo=item;
         String userName=item.getUserName();
-        int video_length= Integer.parseInt(item.getExtraValue().split(",")[0]);
-        String title=item.getExtraValue().split(",")[1];
+        int video_length= Integer.parseInt(item.getExtraValue().split(DELIM)[0]);
+        String title=item.getExtraValue().split(DELIM)[1];
         String imgUrl=item.getImageUrl();
         String videoUrl=item.getVideoUrl();
 
