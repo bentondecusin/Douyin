@@ -4,16 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.Stack;
@@ -34,7 +31,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     private Stack<Integer> stack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        stack = new Stack<Integer>();
+        stack = new Stack<>();
         stack.push(0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -47,7 +44,8 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation_view);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.addOnPageChangeListener(this);
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             @NonNull
             @Override
             public Fragment getItem(int position) {
@@ -69,12 +67,9 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
 
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                viewPager.setCurrentItem(item.getOrder());
-                return true;
-            }
+        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            viewPager.setCurrentItem(item.getOrder());
+            return true;
         });
     }
 

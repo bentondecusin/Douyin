@@ -11,8 +11,7 @@ import android.util.Log;
 import io.bcyl.douyin.Fragment.Home.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
-    private Handler mHandler =new Handler(Looper.getMainLooper());
-    private Boolean logged =false;
+    private final Handler mHandler =new Handler(Looper.getMainLooper());
     private static final int CHECK_LOGGED_CODE=1;
 //    private static UseDataBase dataBase;
     @Override
@@ -24,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent =new Intent(MainActivity.this,HomeActivity.class);
-                intent.putExtra("logged",logged);
-                startActivityForResult(intent,CHECK_LOGGED_CODE);
+                startActivity(intent);
             }
         },3000);
 

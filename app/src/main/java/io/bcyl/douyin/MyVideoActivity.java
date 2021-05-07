@@ -1,9 +1,6 @@
 package io.bcyl.douyin;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,12 +12,6 @@ import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.MimeTypes;
-
-import org.w3c.dom.Text;
-
-import io.bcyl.douyin.Fragment.Home.VideoViewHolder;
-
-import static android.os.Looper.getMainLooper;
 
 public class MyVideoActivity extends AppCompatActivity {
     private String url;
@@ -49,15 +40,7 @@ public class MyVideoActivity extends AppCompatActivity {
         videoTitleView.setText(title);
 
         initializePlayer();
-
-
-
-        new Handler(getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getPlayer().play();
-            }
-        },200);
+        new Handler(getMainLooper()).postDelayed(() -> getPlayer().play(),200);
 
     }
     public void pauseCurrentVideo(){
@@ -106,8 +89,8 @@ public class MyVideoActivity extends AppCompatActivity {
 
         player.addListener(new Player.EventListener() {
             @Override
-            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                if (playbackState == Player.STATE_ENDED) {
+            public void onPlaybackStateChanged(int state) {
+                if (state == Player.STATE_ENDED) {
                     finish();
                 }
             }

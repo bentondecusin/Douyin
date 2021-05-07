@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +16,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import io.bcyl.douyin.Fragment.Home.HomeFragment;
 import io.bcyl.douyin.MyVideoActivity;
 import io.bcyl.douyin.Utils.VideoInfo;
 import io.bcyl.douyin.R;
@@ -28,17 +26,17 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
     private final List<VideoInfo> videoInfoList;
     Context context;
 
-    public UserVideoAdapter(@NonNull List<VideoInfo> myVideoInfos,Context context) {
-        this.videoInfoList = myVideoInfos;
+    public UserVideoAdapter(@NonNull List<VideoInfo> myVideoInfo,Context context) {
+        this.videoInfoList = myVideoInfo;
         this.context=context;
     }
 
     static class UserVideoHolder extends RecyclerView.ViewHolder {
         private final ImageView videoPreview;
-        private TextView videoLengthView;
+        private final TextView videoLengthView;
         public VideoInfo videoInfo=null;
 
-        public UserVideoHolder(@NonNull View itemView,Context context) {
+        public UserVideoHolder(@NonNull View itemView) {
             super(itemView);
             videoLengthView=(TextView)itemView.findViewById(R.id.video_length);
             videoPreview = (ImageView) itemView.findViewById(R.id.item_preview);
@@ -49,7 +47,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
     @Override
     public UserVideoHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item,parent,false);
-        return new UserVideoHolder(view,context);
+        return new UserVideoHolder(view);
     }
 
     @Override
@@ -68,15 +66,12 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
                 .into(holder.videoPreview);
         holder.videoLengthView.setText(transferTime(800));// TODO
 
-        holder.videoPreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context, MyVideoActivity.class);
-                intent.putExtra("url",videoUrl);
-                intent.putExtra("userName",userName);
-                intent.putExtra("title",title);
-                context.startActivity(intent);
-            }
+        holder.videoPreview.setOnClickListener(v -> {
+            Intent intent=new Intent(context, MyVideoActivity.class);
+            intent.putExtra("url",videoUrl);
+            intent.putExtra("userName",userName);
+            intent.putExtra("title",title);
+            context.startActivity(intent);
         });
     }
 
@@ -89,6 +84,6 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
     private String transferTime(int length){
         int minutes=length/60;
         int seconds=length%60;
-        return String.valueOf(minutes)+":"+String.valueOf(seconds);
+        return minutes +":"+ seconds;
     }
 }
