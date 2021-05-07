@@ -1,10 +1,16 @@
 package io.bcyl.douyin.Fragment.Home;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +27,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
     List<VideoInfo> videoInfoList;
     Context context;
     private RecyclerView recyclerView;
+
 //    public VideoAdapter(ArrayList<VideoItem> list, Context context) {
 //        this.videoItemList = list;
 //        this.context = context;
@@ -48,7 +55,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
 //        videoViewHolder.vidTitle.setText(videoItemList.get(i).getTitle());
         String vidTitleStr = videoInfoList.get(i).getExtraValue();
         Log.i("videoInfoList.get(i).getExtraValue()", vidTitleStr);
-        if (vidTitleStr.split(Constants.DELIM).length > 0)
+        if (vidTitleStr.split(Constants.DELIM).length > 1)
             vidTitleStr = videoInfoList.get(i).getExtraValue().split(Constants.DELIM)[1];
         else vidTitleStr = "";
         videoViewHolder.url = videoInfoList.get(i).getVideoUrl();
@@ -66,6 +73,21 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
     public void onViewAttachedToWindow(@NonNull VideoViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         holder.getPlayer().play();
+        holder.getVidTitle().setAlpha(1f);
+        holder.getUsrName().setAlpha(1f);
+        AnimatorSet as = new AnimatorSet();
+        as.playTogether(
+                ObjectAnimator.ofFloat(holder.getVidTitle(), "alpha", 1f,0.1f).setDuration(2000),
+                ObjectAnimator.ofFloat(holder.getUsrName(), "alpha", 1f,0.1f).setDuration(2000));
+        as.start();
+
+//        holder.getVidTitle().postDelayed(new Runnable(){
+//            @Override
+//            public void run()
+//            {
+//                holder.getVidTitle().setVisibility(View.GONE);
+//            }
+//        }, 1000);
     }
 
     @Override

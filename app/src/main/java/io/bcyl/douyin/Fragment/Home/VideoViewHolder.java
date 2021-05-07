@@ -91,4 +91,11 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         return this.player;
     }
 
+    public TextView getUsrName() {
+        return usrName;
+    }
+
+    public TextView getVidTitle(){
+        return vidTitle;
+    }
 }
