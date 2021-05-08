@@ -15,7 +15,8 @@
         android:roundIcon="@drawable/ic_tiktok_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Douyin">
-        <activity android:name=".MyVideoActivity"></activity>
+        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".MyVideoActivity" />
         <activity android:name=".EditVideoActivity" />
         <activity android:name=".Fragment.User.LoginActivity" />
         <activity android:name=".UploadVideoActivity" />

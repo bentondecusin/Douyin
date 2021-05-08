@@ -2,6 +2,7 @@ package io.bcyl.douyin.Fragment.Home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.MimeTypes;
 
+import io.bcyl.douyin.MyVideoActivity;
 import io.bcyl.douyin.R;
 
 public class VideoViewHolder extends RecyclerView.ViewHolder{
@@ -34,11 +36,12 @@ public class VideoViewHolder extends RecyclerView.ViewHolder{
         super(itemView);
         this.itemView = itemView;
         context = itemView.getContext();
-        usrName   = itemView.findViewById(R.id.usrName);
+        usrName = itemView.findViewById(R.id.usrName);
         vidTitle  = itemView.findViewById(R.id.vidTitle);
         playerView = itemView.findViewById(R.id.video_view);
         at = itemView.findViewById(R.id.at);
         loadingView = itemView.findViewById(R.id.loading);
+
 
     }
 

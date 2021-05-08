@@ -1,5 +1,6 @@
 package io.bcyl.douyin.Fragment.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.bcyl.douyin.MyVideoActivity;
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.Utils.Network;
 import io.bcyl.douyin.Utils.VideoInfo;
@@ -61,34 +63,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getData();
-
-        /*
-         * For now we are using sentinel data
-         */
-//        VideoItem src1=new VideoItem(getString(R.string.meme1),"Hugh Jaz 1","Shiba");
-//        VideoItem src2=new VideoItem(getString(R.string.meme2),"Hugh Jaz 2","Birdie");
-//        VideoItem src3=new VideoItem(getString(R.string.meme3),"Hugh Jaz 3","Horses in Walmart");
-//        VideoItem src4=new VideoItem(getString(R.string.meme4),"Hugh Jaz 4","Sad Dog");
-//        VideoItem src5=new VideoItem(getString(R.string.meme5),"Hugh Jaz 5","Omegle");
-//        VideoItem src6=new VideoItem(getString(R.string.meme6),"Hugh Jaz 6","Dank cat");
-//        VideoItem src7=new VideoItem(getString(R.string.meme7),"Hugh Jaz 7","Watch it!");
-//        VideoItem src8=new VideoItem(getString(R.string.meme8),"Hugh Jaz 8","War face");
-//
-//        videoList.add(src1);
-//        videoList.add(src8);
-//        videoList.add(src7);
-//        videoList.add(src4);
-//        videoList.add(src5);
-//        videoList.add(src2);
-//        videoList.add(src3);
-//        videoList.add(src6);
-//        videoList.add(src1);
-//        videoList.add(src2);
-//        videoList.add(src3);
-//        videoList.add(src4);
-//        videoList.add(src5);
-//        videoList.add(src6);
-//        videoList.add(src7);
     }
 
     public void onStart(){
