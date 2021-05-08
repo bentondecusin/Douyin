@@ -72,7 +72,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         Glide.with(context)
                 .load(imgUrl)
                 .into(holder.videoPreview);
-        holder.videoLengthView.setText( video_length == -1 ? "" : transferTime(video_length));// TODO
+        holder.videoLengthView.setText( video_length == -1 ? "" : transferTime(video_length));
 
         holder.videoPreview.setOnClickListener(v -> {
             Intent intent=new Intent(context, MyVideoActivity.class);
@@ -91,7 +91,13 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
     private String transferTime(int length){
         int minutes=length/60;
+
         int seconds=length%60;
-        return minutes +":"+ seconds;
+        if (seconds<10){
+            return minutes +":0"+ seconds;
+        }else {
+            return minutes +":"+ seconds;
+        }
+
     }
 }

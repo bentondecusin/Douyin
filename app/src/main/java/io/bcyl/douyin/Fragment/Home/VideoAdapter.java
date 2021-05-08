@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 
+import io.bcyl.douyin.MyVideoActivity;
 import io.bcyl.douyin.R;
+import io.bcyl.douyin.UserProfileActivity;
 import io.bcyl.douyin.Utils.Constants;
 import io.bcyl.douyin.Utils.VideoInfo;
 
@@ -63,6 +66,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoViewHolder> {
         videoViewHolder.usrName.setText(videoInfoList.get(i).getUserName());
         videoViewHolder.vidTitle.setText(vidTitleStr);
         videoViewHolder.initializePlayer();
+
+        videoViewHolder.usrName.setOnClickListener(v -> {
+            Intent intent=new Intent(context, UserProfileActivity.class);
+            intent.putExtra("userName",videoInfoList.get(i).getUserName());
+            context.startActivity(intent);
+        });
     }
 
     @Override
