@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UploadVideoActivity">
+    tools:context=".UploadVideoActivity"
+    android:background="@color/black">
 
     <VideoView
         android:id="@+id/Edit_view"

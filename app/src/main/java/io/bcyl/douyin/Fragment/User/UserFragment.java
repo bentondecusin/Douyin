@@ -115,11 +115,10 @@ public class UserFragment extends Fragment {
 
         String curUserName = data.getStringExtra("userName");
         userNameView.setText(curUserName);
-        if (resultCode == LOGIN_CODE) {
-            logged = true;
-            setLoginButton(true);
-            initData();
-        }
+
+        logged = true;
+        setLoginButton(true);
+        initData();
     }
 
     private void setLoginButton(boolean logged) {
@@ -140,7 +139,7 @@ public class UserFragment extends Fragment {
         //确定按钮的点击事件
         dialog.setPositiveButton("OK", (dialog12, which) -> {
             setLoginButton(false);
-            logged=false;
+            logged = false;
             userNameView.setText(getString(R.string.not_login));
             headImageView.setImageResource(R.mipmap.tiktok_logo);
             itemList.clear();
