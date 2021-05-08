@@ -193,8 +193,6 @@ public class EditVideoActivity extends AppCompatActivity {
                 Log.i("My", STUDENT_ID + ";" + USER_NAME + ";" + comment.toString());
                 try {
                     Response<UploadResponse> response = call.execute();
-
-
                     if (response.isSuccessful() && response.body().success) {
                         Log.e("My", "Success!");
                         Toast.makeText(EditVideoActivity.this, "上传成功!", Toast.LENGTH_SHORT).show();

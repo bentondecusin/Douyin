@@ -82,16 +82,10 @@ public class UserFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initData();
-    }
-
     private void initData() {
+        Log.d("MyLog",String.valueOf(logged));
         if (logged) {
             userNameView.setText(curUserName);
-            Log.d("MyGET", String.valueOf(itemList.size()));
             new Thread(() -> {
                 itemList = Network.dataGetFromRemote(null);
 
