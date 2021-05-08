@@ -17,6 +17,7 @@ public class MyVideoActivity extends AppCompatActivity {
     private String url;
     private PlayerView playerView;
     private SimpleExoPlayer player;
+    private TextView loadingView;
 
     public MyVideoActivity() {
     }
@@ -34,6 +35,7 @@ public class MyVideoActivity extends AppCompatActivity {
 
         playerView = (PlayerView)findViewById(R.id.video_view);
         TextView userNameView = (TextView) findViewById(R.id.usrName);
+        loadingView = findViewById(R.id.loading);
         userNameView.setText(userName);
 
         TextView videoTitleView = (TextView) findViewById(R.id.vidTitle);
@@ -90,7 +92,19 @@ public class MyVideoActivity extends AppCompatActivity {
         player.addListener(new Player.EventListener() {
             @Override
             public void onPlaybackStateChanged(int state) {
-                if (state == Player.STATE_ENDED) {
+                if (state == Player.STATE_IDLE){
+                    loadingView.setText("视频暂时无法播放");
+                }
+                else if (state == Player.STATE_BUFFERING){
+                    playerView.setControllerAutoShow(true);
+                    loadingView.setAlpha(1);
+                }
+                else if (state == Player.STATE_READY) {
+                    playerView.showController();
+                    playerView.setControllerShowTimeoutMs(1000);
+                    loadingView.setAlpha(0);
+                }
+                else if (state == Player.STATE_ENDED) {
                     finish();
                 }
             }
