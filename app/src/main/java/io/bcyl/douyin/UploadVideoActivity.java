@@ -41,6 +41,7 @@ public class UploadVideoActivity extends AppCompatActivity {
                 Intent newIntent = new Intent(UploadVideoActivity.this, EditVideoActivity.class);
                 newIntent.putExtra("videoPath", mp4Path);
                 startActivity(newIntent);
+                UploadVideoActivity.this.finish();
             }
         });
 
@@ -67,6 +68,8 @@ public class UploadVideoActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void Cancel() {
         File file = new File(mp4Path);

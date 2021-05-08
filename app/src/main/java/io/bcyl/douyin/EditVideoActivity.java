@@ -2,6 +2,7 @@ package io.bcyl.douyin;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
@@ -30,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import io.bcyl.douyin.Fragment.Home.HomeFragment;
 import io.bcyl.douyin.Utils.Constants;
 import io.bcyl.douyin.Utils.UploadResponse;
 import io.bcyl.douyin.Utils.Util;
@@ -57,6 +60,7 @@ public class EditVideoActivity extends AppCompatActivity {
     private EditText comment;
     private Button bt_draft;
     private Button bt_upload;
+    private ProgressBar pb;
     private Uri coverImageUri;
     private UploadVideoAPI api;
     private Bitmap bitmap;
@@ -69,8 +73,7 @@ public class EditVideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_video);
         initActivity();
         initNetwork();
-
-
+        pb.setAlpha(0);
         bitmap = getVideoThumb();
         bt_cover.setImageBitmap(bitmap);
         bt_cover.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +97,7 @@ public class EditVideoActivity extends AppCompatActivity {
         bt_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pb.setAlpha(1);
                 Upload();
             }
         });
@@ -127,7 +131,7 @@ public class EditVideoActivity extends AppCompatActivity {
         comment = findViewById(R.id.input_comment);
         bt_draft = findViewById(R.id.bt_draft);
         bt_upload = findViewById(R.id.bt_upload);
-
+        pb = findViewById(R.id.progressBar);
         video = new File(mp4Path);
         playTime = getPlayTime(mp4Path);
     }
@@ -207,6 +211,7 @@ public class EditVideoActivity extends AppCompatActivity {
                             UploadVideoActivity.uploadactivity.finish();
                         }
                         EditVideoActivity.this.finish();
+
                     }
                     else {
                         runOnUiThread(new Runnable() {
@@ -215,6 +220,7 @@ public class EditVideoActivity extends AppCompatActivity {
                                 Toast.makeText(EditVideoActivity.this, "上传失败!", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        pb.setAlpha(0);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
