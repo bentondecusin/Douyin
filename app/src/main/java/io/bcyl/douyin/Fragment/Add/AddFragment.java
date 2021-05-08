@@ -1,8 +1,10 @@
 package io.bcyl.douyin.Fragment.Add;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
@@ -16,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -30,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import io.bcyl.douyin.R;
 import io.bcyl.douyin.UploadVideoActivity;
@@ -41,15 +45,22 @@ import io.bcyl.douyin.UploadVideoActivity;
  */
 public class AddFragment extends Fragment implements SurfaceHolder.Callback{
 
+    private static final String TAG = "Douyin";
+    private static final int REQUEST_CODE_VIDEO = 66;
+    private static final String VIDEO_TYPE = "video/*";
+
     private SurfaceView mSurfaceView;
     private Camera mCamera;
     private MediaRecorder mMediaRecorder;
     private SurfaceHolder mHolder;
     private VideoView mVideoView;
     private Button mRecordButton;
+    private Button mDCIMButton;
+    private Button mChangeCameraButton;
     private boolean isRecording = false;
 
     private String mp4Path = "";
+    private Uri videoUri = null;
     private String param1;
     private static final String ARG_PARAM = "param";
 
@@ -89,12 +100,61 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mSurfaceView = view.findViewById(R.id.surfaceview);
 
         mRecordButton = view.findViewById(R.id.bt_record);
+        mDCIMButton = view.findViewById(R.id.bt_DCIM);
+        mChangeCameraButton = view.findViewById(R.id.bt_change);
+
+        mDCIMButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                }
+                if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                }
+                getFile(REQUEST_CODE_VIDEO, VIDEO_TYPE, "选择视频");
+            }
+        });
 
         mHolder = mSurfaceView.getHolder();
 
         requestPermission();
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (REQUEST_CODE_VIDEO== requestCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                videoUri = data.getData();
+
+                if (videoUri != null) {
+                    Log.d(TAG, "pick cover image " + videoUri.toString());
+                } else {
+                    Log.d(TAG, "uri2File fail " + data.getData());
+                }
+                mp4Path = getRealPathFromURI(videoUri);
+                if (mp4Path != null) {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), UploadVideoActivity.class);
+                    intent.putExtra("mp4Path", mp4Path);
+                    startActivity(intent);
+                }
+            } else {
+                Log.d(TAG, "file pick fail");
+            }
+        }
+    }
+
+
+    private void getFile(int requestCode, String type, String title) {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(type);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+        intent.putExtra(Intent.EXTRA_TITLE, title);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -228,25 +288,23 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
 
     }
 
-
     private String getOutputMediaPath() {
         File mediaStorageDir = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            mediaStorageDir = this.getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         }
         else {
             mediaStorageDir = this.getActivity().getFilesDir();
         }
+        // mediaStorageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile = new File(mediaStorageDir, "IMG_" + timeStamp + ".mp4");
         if (!mediaFile.exists()) {
             mediaFile.getParentFile().mkdirs();
         }
+        Log.d(TAG, "mp4Path: " + mediaFile.getAbsolutePath());
         return mediaFile.getAbsolutePath();
-    }
-
-    private Uri getMediaPath() {
-        return null;
     }
 
     @Override
@@ -295,5 +353,12 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     public void onPause() {
         super.onPause();
         mCamera.stopPreview();
+    }
+
+    private String getRealPathFromURI(Uri fileUrl) {
+        String fileName = null;
+        List<String> pathSeg = fileUrl.getPathSegments();
+        fileName = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + '/' + pathSeg.get(2) + '/' + pathSeg.get(3);
+        return fileName;
     }
 }

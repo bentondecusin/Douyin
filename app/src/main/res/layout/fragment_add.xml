@@ -19,27 +19,34 @@
         android:gravity="center"
         tools:ignore="MissingConstraints" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/bt_record"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@drawable/selector_button"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:layout_marginStart="10dp"
             android:text="@string/record"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </LinearLayout>
+            android:gravity="center"
+            />
+
+        <Button
+            android:id="@+id/bt_DCIM"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/bt_record"
+            android:background="@drawable/selector_button"
+            android:gravity="center" />
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

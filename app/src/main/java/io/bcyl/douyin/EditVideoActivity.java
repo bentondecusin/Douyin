@@ -4,13 +4,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +22,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -44,6 +51,7 @@ public class EditVideoActivity extends AppCompatActivity {
     private static final String TAG = "Douyin";
     private static final int REQUEST_CODE_COVER_IMAGE = 101;
     private static final String COVER_IMAGE_TYPE = "image/*";
+    private static final String VIDEO_MIME_TYPE_MP4 = "video/*";
     private ImageButton bt_cover;
     private String mp4Path;
     private EditText comment;
@@ -60,6 +68,7 @@ public class EditVideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_video);
         initActivity();
         initNetwork();
+
 
         bitmap = getVideoThumb();
         bt_cover.setImageBitmap(bitmap);
@@ -117,6 +126,8 @@ public class EditVideoActivity extends AppCompatActivity {
         comment = findViewById(R.id.input_comment);
         bt_draft = findViewById(R.id.bt_draft);
         bt_upload = findViewById(R.id.bt_upload);
+
+        video = new File(mp4Path);
     }
 
     private void initNetwork() {
@@ -134,10 +145,6 @@ public class EditVideoActivity extends AppCompatActivity {
         startActivityForResult(intent, requestCode);
     }
 
-    private void getCoverImage() {
-        return;
-    }
-
     private void Upload() {
         byte[] coverImageData = null;
         if (coverImageUri != null) {
@@ -150,7 +157,7 @@ public class EditVideoActivity extends AppCompatActivity {
             coverImageData = out.toByteArray();
         }
 
-        video = new File(mp4Path);
+
 
         if (coverImageData == null || coverImageData.length == 0) {
             Toast.makeText(this, "封面不存在", Toast.LENGTH_SHORT).show();
@@ -176,7 +183,7 @@ public class EditVideoActivity extends AppCompatActivity {
                 Call<UploadResponse> call = api.uploadVideo(
                         IDENTIFIER,
                         sharedPreferences.getString( "userName", "Guest"),
-                         Constants.DELIM +comment.getText(),
+                         Constants.DELIM +comment.getText().toString(),
                         cover_image_part,
                         video_part,
                         token
@@ -228,4 +235,5 @@ public class EditVideoActivity extends AppCompatActivity {
         }
         return data;
     }
+
 }
