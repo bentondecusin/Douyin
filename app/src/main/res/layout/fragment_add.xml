@@ -32,7 +32,6 @@
             android:id="@+id/bt_record"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:background="@drawable/selector_button"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/record"
