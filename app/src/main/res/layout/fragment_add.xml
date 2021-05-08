@@ -10,43 +10,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/bt_change"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center"
-        tools:ignore="MissingConstraints" />
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent">
 
+
+        <Button
+            android:paddingTop="10dp"
+            android:drawableTop="@drawable/ic_camera_trans"
+            android:id="@+id/bt_change"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/selector_button"
+            tools:ignore="MissingConstraints" />
+
         <Button
             android:id="@+id/bt_record"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/selector_button"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:layout_marginStart="10dp"
             android:text="@string/record"
+            android:textSize="32sp"
             android:textColor="@color/white"
             android:gravity="center"
             />
 
         <Button
+            android:text="从本地"
             android:id="@+id/bt_DCIM"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/bt_record"
             android:background="@drawable/selector_button"
             android:gravity="center" />
 
-    </RelativeLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

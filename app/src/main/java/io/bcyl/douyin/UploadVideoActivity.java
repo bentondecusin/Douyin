@@ -16,7 +16,6 @@ import android.widget.VideoView;
 public class UploadVideoActivity extends AppCompatActivity {
 
     public static UploadVideoActivity uploadactivity;
-
     private String mp4Path;
     private VideoView videoView;
     private Button btConfirm;

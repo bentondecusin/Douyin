@@ -37,6 +37,8 @@ public class UserFragment extends Fragment {
     private RecyclerView myVideoView;
     private TextView userNameView;
     private Button loginButton;
+    private String curUserName;
+    private boolean logged;
     private View.OnClickListener loggedListener, unLoggedListener;
 
     @Override
@@ -69,35 +71,41 @@ public class UserFragment extends Fragment {
 
     private void initView() {
         SharedPreferences preferences = getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
-        boolean logged = preferences.getBoolean("logged", false);
+        logged = preferences.getBoolean("logged", false);
         setLoginButton(logged);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
         myVideoView.setLayoutManager(layoutManager);
 
-        if (logged) {
-            String curUserName = preferences.getString("userName", getString(R.string.not_login));
-            Log.d("MyUserName",curUserName);
-            userNameView.setText(curUserName);
-            initData(curUserName);
-        }
-
-        Log.d("MyGET",String.valueOf(itemList.size()));
+        curUserName = preferences.getString("userName", getString(R.string.not_login));
+        Log.d("MyUserName", curUserName);
 
     }
 
-    private void initData(String userName) {
-        new Thread(() -> {
-            itemList = Network.dataGetFromRemote(null);
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
 
-            if (itemList != null && !itemList.isEmpty()){
-                new Handler(getMainLooper()).post(() -> {
-                    itemList.removeIf(item-> !item.getUserName().equals(userName));
-                    Log.d("MyList",String.valueOf(itemList.size()));
-                    myVideoView.setAdapter(new UserVideoAdapter(itemList,getContext()));
-                });
-            }
-        }).start();
+    private void initData() {
+        if (logged) {
+            userNameView.setText(curUserName);
+            Log.d("MyGET", String.valueOf(itemList.size()));
+            new Thread(() -> {
+                itemList = Network.dataGetFromRemote(null);
+
+                if (itemList != null && !itemList.isEmpty()) {
+                    new Handler(getMainLooper()).post(() -> {
+                        itemList.removeIf(item -> !item.getUserName().equals(curUserName));
+                        Log.d("MyList", String.valueOf(itemList.size()));
+                        myVideoView.setAdapter(new UserVideoAdapter(itemList, getContext()));
+                    });
+                }
+            }).start();
+        }
+
+
     }
 
 
@@ -108,8 +116,9 @@ public class UserFragment extends Fragment {
         String curUserName = data.getStringExtra("userName");
         userNameView.setText(curUserName);
         if (resultCode == LOGIN_CODE) {
+            logged = true;
             setLoginButton(true);
-            initData(curUserName);
+            initData();
         }
     }
 
@@ -124,20 +133,22 @@ public class UserFragment extends Fragment {
     }
 
     private void reset() {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(getContext());
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         dialog.setTitle("确定要退出登录吗？");
         dialog.setCancelable(true);
 
         //确定按钮的点击事件
         dialog.setPositiveButton("OK", (dialog12, which) -> {
             setLoginButton(false);
+            logged=false;
             userNameView.setText(getString(R.string.not_login));
             headImageView.setImageResource(R.mipmap.tiktok_logo);
             itemList.clear();
-            myVideoView.setAdapter(new UserVideoAdapter(itemList,getContext()));
+            myVideoView.setAdapter(new UserVideoAdapter(itemList, getContext()));
         });
         //取消按钮的点击事件
-        dialog.setNegativeButton("Cancel", (dialog1, which) -> {});
+        dialog.setNegativeButton("Cancel", (dialog1, which) -> {
+        });
         dialog.show();
 
     }

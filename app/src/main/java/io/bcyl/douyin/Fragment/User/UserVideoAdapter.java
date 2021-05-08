@@ -59,7 +59,7 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
         String userName=item.getUserName();
         int video_length = -1;
         try{
-            video_length = Integer.parseInt(item.getExtraValue().split(DELIM)[0]);
+            video_length = Integer.parseInt(item.getExtraValue().split(DELIM)[0])/1000;
         }catch (Exception e){
             Log.i("Video length/NumberFormatException", "Video does not have length");
         }
