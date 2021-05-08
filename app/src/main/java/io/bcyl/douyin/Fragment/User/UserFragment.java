@@ -107,8 +107,12 @@ public class UserFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String curUserName = data.getStringExtra("userName");
+        curUserName = data.getStringExtra("userName");
         userNameView.setText(curUserName);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userName",curUserName);
+        editor.apply();
 
         logged = true;
         setLoginButton(true);
