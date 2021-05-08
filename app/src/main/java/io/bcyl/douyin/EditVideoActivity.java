@@ -61,6 +61,7 @@ public class EditVideoActivity extends AppCompatActivity {
     private UploadVideoAPI api;
     private Bitmap bitmap;
     private File video;
+    private String playTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class EditVideoActivity extends AppCompatActivity {
         bt_upload = findViewById(R.id.bt_upload);
 
         video = new File(mp4Path);
+        playTime = getPlayTime(mp4Path);
     }
 
     private void initNetwork() {
@@ -183,7 +185,7 @@ public class EditVideoActivity extends AppCompatActivity {
                 Call<UploadResponse> call = api.uploadVideo(
                         IDENTIFIER,
                         sharedPreferences.getString( "userName", "Guest"),
-                         Constants.DELIM +comment.getText().toString(),
+                         playTime + Constants.DELIM +comment.getText().toString(),
                         cover_image_part,
                         video_part,
                         token
@@ -222,6 +224,13 @@ public class EditVideoActivity extends AppCompatActivity {
         MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(mp4Path);
         return mediaMetadataRetriever.getFrameAtTime();
+    }
+
+    private String getPlayTime(String mp4Path) {
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(mp4Path);
+        String duration = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return duration;
     }
 
     private byte[] readDataFromUri(Uri uri) {
