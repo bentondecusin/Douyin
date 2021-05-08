@@ -183,23 +183,23 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
         initCamera(cameraID);
-        mSurfaceView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCamera != null) {
-                    mCamera.autoFocus(new Camera.AutoFocusCallback(){
-                        @Override
-                        public void onAutoFocus(boolean success, Camera camera) {
-                            if (success) {
-                                Log.e("My", "Focus Success!");
-                            } else {
-                                mCamera.autoFocus(this);
-                            }
-                        }
-                    });
-                }
-            }
-        });
+//        mSurfaceView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mCamera != null) {
+//                    mCamera.autoFocus(new Camera.AutoFocusCallback(){
+//                        @Override
+//                        public void onAutoFocus(boolean success, Camera camera) {
+//                            if (success) {
+//                                Log.e("My", "Focus Success!");
+//                            } else {
+//                                mCamera.autoFocus(this);
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//        });
         mHolder.addCallback(this);
     }
 
@@ -224,7 +224,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             parameters.set("rotation", 270);
         }
         parameters.setRecordingHint(true);
-        mCamera.setParameters(parameters);
+//        mCamera.setParameters(parameters);
         mCamera.setDisplayOrientation(90);
     }
 
@@ -356,13 +356,16 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             return;
         }
         //停止预览效果
-        mCamera.stopPreview();
+
         //重新设置预览效果
         try {
-            mCamera.setPreviewDisplay(surfaceHolder);
+            if (mCamera == null) {
+                initCamera(cameraID);
+            }
             mCamera.startPreview();
+            mCamera.setPreviewDisplay(surfaceHolder);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("surfaceChanged", e.toString());
         }
     }
 
