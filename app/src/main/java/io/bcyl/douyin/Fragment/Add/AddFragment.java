@@ -58,6 +58,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     private Button mDCIMButton;
     private Button mChangeCameraButton;
     private boolean isRecording = false;
+    private int cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
 
     private String mp4Path = "";
     private Uri videoUri = null;
@@ -89,7 +90,6 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -103,6 +103,12 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mDCIMButton = view.findViewById(R.id.bt_DCIM);
         mChangeCameraButton = view.findViewById(R.id.bt_change);
 
+        mChangeCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchCamera();
+            }
+        });
         mDCIMButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,7 +182,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO)) {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
-        initCamera();
+        initCamera(cameraID);
         mSurfaceView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,16 +203,43 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mHolder.addCallback(this);
     }
 
-    private void initCamera() {
-        mCamera = Camera.open();
+    private void initCamera(int cameraID) {
+        if (mCamera != null) {
+            mHolder.removeCallback(this);
+            mCamera.setPreviewCallback(null);
+            mCamera.stopPreview();
+            mCamera.lock();
+            mCamera.release();
+            mCamera = null;
+        }
+        mCamera = Camera.open(cameraID);
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPictureFormat(ImageFormat.JPEG);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         parameters.set("orientation", "portrait");
-        parameters.set("rotation", 90);
+        if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            parameters.set("rotation", 90);
+        }
+        else {
+            parameters.set("rotation", 270);
+        }
         parameters.setRecordingHint(true);
         mCamera.setParameters(parameters);
         mCamera.setDisplayOrientation(90);
+    }
+
+    private void switchCamera(){
+        if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
+            cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
+        } else {
+            cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
+        }
+        try {
+            releaseMediaRecorder();
+            initCamera(cameraID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean prepareVideoRecorder() {
@@ -255,7 +288,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
 
     public void record(View view) {
         if (isRecording) {
-            mRecordButton.setText("录制");
+            mRecordButton.setText("+");
 
             mMediaRecorder.setOnErrorListener(null);
             mMediaRecorder.setOnInfoListener(null);
@@ -280,7 +313,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             startActivity(intent);
         } else {
             if(prepareVideoRecorder()) {
-                mRecordButton.setText("暂停");
+                mRecordButton.setText("完成");
                 mMediaRecorder.start();
             }
         }
@@ -344,7 +377,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     public void onResume() {
         super.onResume();
         if (mCamera == null) {
-            initCamera();
+            initCamera(cameraID);
         }
         mCamera.startPreview();
     }

@@ -13,9 +13,12 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.io.File;
+
 public class UploadVideoActivity extends AppCompatActivity {
 
     public static UploadVideoActivity uploadactivity;
+    private static final String TAG = "Douyin";
     private String mp4Path;
     private VideoView videoView;
     private Button btConfirm;
@@ -66,6 +69,14 @@ public class UploadVideoActivity extends AppCompatActivity {
     }
 
     private void Cancel() {
+        File file = new File(mp4Path);
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                Log.d(TAG, "删除视频成功");
+            } else {
+                Log.d(TAG, "删除视频失败");
+            }
+        }
         UploadVideoActivity.this.finish();
     }
 }

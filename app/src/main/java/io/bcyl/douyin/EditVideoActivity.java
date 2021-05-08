@@ -198,6 +198,13 @@ public class EditVideoActivity extends AppCompatActivity {
                     if (response.isSuccessful() && response.body().success) {
                         Log.e("My", "Success!");
                         Toast.makeText(EditVideoActivity.this, "上传成功!", Toast.LENGTH_SHORT).show();
+                        if (video.exists() && video.isFile()) {
+                            if (video.delete()) {
+                                Log.d(TAG, "删除视频成功");
+                            } else {
+                                Log.d(TAG, "删除视频失败");
+                            }
+                        }
                         if (UploadVideoActivity.uploadactivity != null) {
                             UploadVideoActivity.uploadactivity.finish();
                         }
