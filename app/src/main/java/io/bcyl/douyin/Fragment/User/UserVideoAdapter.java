@@ -90,9 +90,9 @@ public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.User
 
 
     private String transferTime(int length){
-        int minutes=length/60;
+        int minutes=length/60000;
 
-        int seconds=length%60;
+        int seconds=length%60000;
         if (seconds<10){
             return minutes +":0"+ seconds;
         }else {
