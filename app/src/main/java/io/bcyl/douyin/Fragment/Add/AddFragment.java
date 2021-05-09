@@ -58,7 +58,6 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     private Button mDCIMButton;
     private Button mChangeCameraButton;
     private boolean isRecording = false;
-    private int cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
 
     private String mp4Path = "";
     private Uri videoUri = null;
@@ -103,12 +102,6 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         mDCIMButton = view.findViewById(R.id.bt_DCIM);
         mChangeCameraButton = view.findViewById(R.id.bt_change);
 
-        mChangeCameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchCamera();
-            }
-        });
         mDCIMButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,64 +175,37 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
         if (PackageManager.PERMISSION_DENIED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.RECORD_AUDIO)) {
             requestPermissions(new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
-        initCamera(cameraID);
-//        mSurfaceView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (mCamera != null) {
-//                    mCamera.autoFocus(new Camera.AutoFocusCallback(){
-//                        @Override
-//                        public void onAutoFocus(boolean success, Camera camera) {
-//                            if (success) {
-//                                Log.e("My", "Focus Success!");
-//                            } else {
-//                                mCamera.autoFocus(this);
-//                            }
-//                        }
-//                    });
-//                }
-//            }
-//        });
+        initCamera();
+        mSurfaceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCamera != null) {
+                    mCamera.autoFocus(new Camera.AutoFocusCallback(){
+                        @Override
+                        public void onAutoFocus(boolean success, Camera camera) {
+                            if (success) {
+                                Log.e("My", "Focus Success!");
+                            } else {
+                                mCamera.autoFocus(this);
+                            }
+                        }
+                    });
+                }
+            }
+        });
         mHolder.addCallback(this);
     }
 
-    private void initCamera(int cameraID) {
-        if (mCamera != null) {
-            mHolder.removeCallback(this);
-            mCamera.setPreviewCallback(null);
-            mCamera.stopPreview();
-            mCamera.lock();
-            mCamera.release();
-            mCamera = null;
-        }
-        mCamera = Camera.open(cameraID);
+    private void initCamera() {
+        mCamera = Camera.open();
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPictureFormat(ImageFormat.JPEG);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
         parameters.set("orientation", "portrait");
-        if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
-            parameters.set("rotation", 90);
-        }
-        else {
-            parameters.set("rotation", 270);
-        }
+        parameters.set("rotation", 90);
         parameters.setRecordingHint(true);
-//        mCamera.setParameters(parameters);
+        mCamera.setParameters(parameters);
         mCamera.setDisplayOrientation(90);
-    }
-
-    private void switchCamera(){
-        if (cameraID == Camera.CameraInfo.CAMERA_FACING_BACK) {
-            cameraID = Camera.CameraInfo.CAMERA_FACING_FRONT;
-        } else {
-            cameraID = Camera.CameraInfo.CAMERA_FACING_BACK;
-        }
-        try {
-            releaseMediaRecorder();
-            initCamera(cameraID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private boolean prepareVideoRecorder() {
@@ -356,16 +322,13 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
             return;
         }
         //停止预览效果
-
+        mCamera.stopPreview();
         //重新设置预览效果
         try {
-            if (mCamera == null) {
-                initCamera(cameraID);
-            }
-            mCamera.startPreview();
             mCamera.setPreviewDisplay(surfaceHolder);
+            mCamera.startPreview();
         } catch (IOException e) {
-            Log.e("surfaceChanged", e.toString());
+            e.printStackTrace();
         }
     }
 
@@ -380,7 +343,7 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     public void onResume() {
         super.onResume();
         if (mCamera == null) {
-            initCamera(cameraID);
+            initCamera();
         }
         mCamera.startPreview();
     }

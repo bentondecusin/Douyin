@@ -171,8 +171,8 @@ public class EditVideoActivity extends AppCompatActivity {
         }
 
         MultipartBody.Part cover_image_part = MultipartBody.Part.createFormData(
-                "image",
-                "cover.png",
+                "cover_image",
+                "cover_image.png",
                 RequestBody.create(MediaType.parse("multipart/form-data"), coverImageData)
         );
 
