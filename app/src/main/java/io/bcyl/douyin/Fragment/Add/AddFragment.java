@@ -197,15 +197,20 @@ public class AddFragment extends Fragment implements SurfaceHolder.Callback{
     }
 
     private void initCamera() {
-        mCamera = Camera.open();
-        Camera.Parameters parameters = mCamera.getParameters();
-        parameters.setPictureFormat(ImageFormat.JPEG);
-        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-        parameters.set("orientation", "portrait");
-        parameters.set("rotation", 90);
-        parameters.setRecordingHint(true);
-        mCamera.setParameters(parameters);
-        mCamera.setDisplayOrientation(90);
+        try {
+            mCamera = Camera.open();
+            Camera.Parameters parameters = mCamera.getParameters();
+            parameters.setPictureFormat(ImageFormat.JPEG);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            parameters.set("orientation", "portrait");
+            parameters.set("rotation", 90);
+            parameters.setRecordingHint(true);
+            mCamera.setParameters(parameters);
+            mCamera.setDisplayOrientation(90);
+        }catch (Exception e){
+            Log.d("1","1");
+        }
+
     }
 
     private boolean prepareVideoRecorder() {
