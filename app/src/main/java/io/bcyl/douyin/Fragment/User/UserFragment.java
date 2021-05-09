@@ -79,6 +79,7 @@ public class UserFragment extends Fragment {
 
         curUserName = preferences.getString("userName", getString(R.string.not_login));
         Log.d("MyUserName", curUserName);
+        initData();
 
     }
 
