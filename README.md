@@ -11,10 +11,10 @@
 ### 您可以选择登陆/登出 | You may choose to login/logout
 ### 观看视频 | Watch Meme        
 ####    1. 点击主界面可以获取最新视频 | Click home button to fetch the latest videos   
-####    2. 点击up主的用户名可查看该up主的所有视频 | Click username to see his/her uploads    
+####    2. 点击up主的用户名可查看该up主的所有视频 | Click the user name to see his/her uploads    
 ### 上传视频 | Upload Meme.   
-####    1. 点击上传界面可以拍摄/上传视频 | Click camera button to take/upload the a new video
-####    2. 拍摄/上传后可预览 | Preview upon finish taking/uploading     
+####    1. 点击上传界面可以拍摄/上传视频 | Click camera button to take/upload a new video
+####    2. 拍摄/上传后可预览 | Preview upon finish taking/uploading
 ####    3. 发布前可增加标题 | Add caption before creating a new post
 
 ## 我们的团队 Our Team   
