@@ -17,6 +17,12 @@
 ####    2. 拍摄/上传后可预览 | Preview upon finish taking/uploading
 ####    3. 发布前可增加标题 | Add caption before creating a new post
 
+## 
+<span>
+<img src="/img/Screenshot_1620473454.png" alt="drawing" width="200"/>
+<img src="/img/Screenshot_1620473719.png" alt="drawing" width="200"/>
+</span>
+
 ## 我们的团队 Our Team   
   [Benton Li](https://github.com/bentondecusin/)    
   [裴奕博](https://github.com/pyb0924)    
